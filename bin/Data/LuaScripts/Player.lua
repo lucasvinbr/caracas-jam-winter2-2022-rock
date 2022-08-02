@@ -44,12 +44,12 @@ function Player:Start()
 
     ---@type CollisionCircle2D
     self.colshape = self.node:CreateComponent("CollisionCircle2D")
-    self.colshape.radius = 1.1 -- Set shape size
+    self.colshape.radius = 0.22 -- Set shape size
     self.colshape.friction = 0.0 -- Set friction
     self.colshape.restitution = 0.1 -- Slight bounce
     self.colshape:SetCategoryBits(COLMASK_PLAYER)
 
-    self.node:SetScale(3.0)
+    self.node:SetScale(4.5)
 
     log:Write(LOG_DEBUG, self.node.worldPosition:ToString())
 end
