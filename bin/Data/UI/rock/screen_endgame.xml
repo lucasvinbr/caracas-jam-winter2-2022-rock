@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<element>
+	<attribute name="Name" value="Endgame" />
+	<attribute name="Size" value="1920 1017" />
+	<attribute name="Max Anchor" value="1 1" />
+	<attribute name="Pivot" value="0 0" />
+	<attribute name="Enable Anchor" value="true" />
+	<element type="Text">
+		<attribute name="Name" value="winnerText" />
+		<attribute name="Position" value="0 100" />
+		<attribute name="Min Anchor" value="0.5 0" />
+		<attribute name="Max Anchor" value="0 0.04" />
+		<attribute name="Pivot" value="0.5 0" />
+		<attribute name="Color" value="1 1 1 1" />
+		<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Bottom Left Color" value="1 0.55 0.85 1" />
+		<attribute name="Bottom Right Color" value="0.35 0.85 0.85 1" />
+		<attribute name="Font Size" value="66" />
+		<attribute name="Text" value="WINNER: DADADA" />
+		<attribute name="Text Alignment" value="Center" />
+		<attribute name="Text Effect" value="Stroke" />
+		<attribute name="Stroke Thickness" value="3" />
+	</element>
+</element>
