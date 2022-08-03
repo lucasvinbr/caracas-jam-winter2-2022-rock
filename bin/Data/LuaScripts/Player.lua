@@ -9,10 +9,19 @@ local JUMP_FORCE = 7.0
 local MOVE_FORCE = 0.8
 local INAIR_MOVE_FORCE = 0.02
 local BRAKE_FORCE = 0.2
-local MOVE_SPEED = 2.0
+local MOVE_SPEED = 7.0
 local VERTICAL_MOVESPEED_FACTOR = 0.8
+local ATTACK_DURATION = 0.3
+local ATTACK_TIME_BEFORE_HIT = 0.15
+
 
 local TIME_BEFORE_ROCKING = 2.0
+
+local PLAYERSTATE_IDLE = 0
+local PLAYERSTATE_MOVING = 1
+local PLAYERSTATE_ROCKING = 2
+local PLAYERSTATE_ATTACKING = 3
+
 
 -- Character script object class
 ---@type Player
@@ -26,15 +35,11 @@ function Player:Start()
 
     self.timeBar = nil
 
-    self.isRocking = false
-    self.idleTime = 0.0
+    self.curPlayerState = PLAYERSTATE_IDLE
+    self.wantsToAttack = false
+    self.actionTimeElapsed = 0.0
 
-    self.spriteNode = self.node:CreateChild("playerSpriteNode")
-
-    self.animatedSprite = self.spriteNode:CreateComponent("AnimatedSprite2D")
-    self.animatedSprite.animationSet = cache:GetResource("AnimationSet2D", "Urho2D/rock/player.scml")
-    self.animatedSprite.animation = "idle"
-    self.animatedSprite:SetLayer(4)
+    self.timeSinceLastAttack = 1.0
 
     ---@type RigidBody2D
     self.body = self.node:CreateComponent("RigidBody2D")
@@ -49,9 +54,16 @@ function Player:Start()
     self.colshape.restitution = 0.1 -- Slight bounce
     self.colshape:SetCategoryBits(COLMASK_PLAYER)
 
-    self.node:SetScale(4.5)
+    self.spriteNode = self.node:CreateChild("playerSpriteNode")
 
-    log:Write(LOG_DEBUG, self.node.worldPosition:ToString())
+    self.spriteNode:SetPosition2D(0, 0.4)
+
+    self.animatedSprite = self.spriteNode:CreateComponent("AnimatedSprite2D")
+    self.animatedSprite.animationSet = cache:GetResource("AnimationSet2D", "Urho2D/rock/player.scml")
+    self.animatedSprite.animation = "idle"
+    self.animatedSprite:SetLayer(SPRITELAYER_PLAYER)
+
+    self.node:SetScale(4.5)
 end
 
 function Player:Update(timeStep)
@@ -59,6 +71,9 @@ function Player:Update(timeStep)
     if CurGameState ~= GAMESTATE_PLAYING then
         return
     end
+
+    self.actionTimeElapsed = self.actionTimeElapsed + timeStep
+    self.timeSinceLastAttack = self.timeSinceLastAttack + timeStep
 
     local node = self.node
 
@@ -88,25 +103,54 @@ function Player:Update(timeStep)
         moveDir = moveDir + Vector3.DOWN * speedY
     end
 
-    -- Move
-    if not moveDir:Equals(Vector3.ZERO) and self.canMove then
-        node:Translate(moveDir * timeStep)
-        self.idleTime = 0.0
-        self.isRocking = false
-    else
-        self.idleTime = self.idleTime + timeStep
-        if not(self.isRocking) and self.idleTime >= TIME_BEFORE_ROCKING then
-            self.isRocking = true
+
+    self.wantsToAttack = false
+    if input:GetKeyPress(KEY_SPACE) then
+        self.wantsToAttack = true
+    end
+
+    -- if not attacking, we can move
+    if self.wantsToAttack and self:CanAttack() then
+        self.actionTimeElapsed = 0.0
+        self.timeSinceLastAttack = 0.0
+        self.curPlayerState = PLAYERSTATE_ATTACKING
+    end
+
+    if self.curPlayerState ~= PLAYERSTATE_ATTACKING then
+        if not moveDir:Equals(Vector3.ZERO) and self.canMove then
+            node:Translate(moveDir * timeStep)
+            self.actionTimeElapsed = 0.0
+            self.curPlayerState = PLAYERSTATE_MOVING
+        else
+            self.curPlayerState = PLAYERSTATE_IDLE
+            if self.actionTimeElapsed >= TIME_BEFORE_ROCKING then
+                self.curPlayerState = PLAYERSTATE_ROCKING
+            end
+        end
+    end
+
+
+    if self.curPlayerState == PLAYERSTATE_ATTACKING then
+        if self.actionTimeElapsed >= ATTACK_DURATION then
+            self.curPlayerState = PLAYERSTATE_IDLE
         end
     end
 
     -- animation...
-    if self.isRocking then
+    if self.curPlayerState == PLAYERSTATE_ROCKING then
         self.animatedSprite:SetAnimation("rock")
+    elseif self.curPlayerState == PLAYERSTATE_ATTACKING then
+        self.animatedSprite:SetAnimation("attack")
+    elseif self.curPlayerState == PLAYERSTATE_MOVING then
+        self.animatedSprite:SetAnimation("idle")
     else
         self.animatedSprite:SetAnimation("idle")
     end
 
+end
+
+function Player:CanAttack()
+    return self.timeSinceLastAttack >= ATTACK_DURATION
 end
 
 function Player:HandleCollisionStart(eventType, eventData)

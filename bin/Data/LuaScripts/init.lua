@@ -12,6 +12,9 @@ COLMASK_WORLD = 1
 COLMASK_PLAYER = 2
 COLMASK_OBJS = 4
 
+SPRITELAYER_WORLD = 0
+SPRITELAYER_PLAYER = 4
+
 TAG_PLAYER = "player"
 TAG_ENEMY = "enemy"
 TAG_WIN_OBJ = "winnerobj"
@@ -89,8 +92,11 @@ function CreateScene()
 
     local scenarioNode = Scene_:CreateChild("scenario")
     local scenarioSprite = scenarioNode:CreateComponent("StaticSprite2D")
-    scenarioSprite:SetSprite(cache:GetResource("Sprite2D", "Urho2D/rock/tela_04_palco.png"))
+    scenarioSprite:SetSprite(cache:GetResource("Sprite2D", "Urho2D/rock/tela_05_palco.png"))
+    scenarioSprite:SetLayer(SPRITELAYER_WORLD)
     scenarioNode:SetScale2D(world.WORLD_SCALE)
+
+    world.CreateBoundaries()
 
     -- Create camera
     GameCameraNode = Node()

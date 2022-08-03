@@ -14,8 +14,11 @@ world.PlayerScript = nil
 ---@type Node
 world.DynamicContentParent = nil
 
+
+world.BOUNDS_CENTER = Vector2(0.0, -4.0)
+
 --- assuming world is a square
-world.BOUNDS_UNSCALED = Vector2(5.0, 2.3)
+world.BOUNDS_UNSCALED = Vector2(12.0, 3.5)
 
 world.WORLD_SCALE = Vector2(3.5, 4.0)
 
@@ -29,6 +32,41 @@ function world.CreateDynamicContent()
     -- Create player character
     world.CreateCharacter(Vector2.ZERO)
 
+end
+
+function world.CreateBoundaries()
+    local boundariesParent = Scene_:CreateChild("boundaries")
+
+    -- create level boundaries based on world bounds constants and scale
+    local boundaryThickness = 8
+    local rightBoundary = Scene_:CreateChild("bRight")
+    local boundaryRigid = rightBoundary:CreateComponent("RigidBody2D")
+    boundaryRigid.bodyType = BT_STATIC
+
+    local boundaryShape = rightBoundary:CreateComponent("CollisionBox2D")
+    boundaryShape:SetCategoryBits(COLMASK_WORLD)
+    boundaryShape:SetSize(2.0, 2.0)
+
+    rightBoundary.position2D = world.BOUNDS_CENTER + Vector2(world.BOUNDS_UNSCALED.x + boundaryThickness, 0)
+    rightBoundary:SetScale2D(Vector2(boundaryThickness, world.BOUNDS_UNSCALED.y * 2))
+
+    local leftBoundary = rightBoundary:Clone()
+    leftBoundary.position2D = world.BOUNDS_CENTER + Vector2(-world.BOUNDS_UNSCALED.x - boundaryThickness, 0)
+    leftBoundary:SetScale2D(Vector2(boundaryThickness, world.BOUNDS_UNSCALED.y * 2))
+
+    local topBoundary = rightBoundary:Clone()
+    topBoundary.position2D = world.BOUNDS_CENTER + Vector2(0, world.BOUNDS_UNSCALED.y + boundaryThickness)
+    topBoundary:SetScale2D(Vector2(world.BOUNDS_UNSCALED.x * 2, boundaryThickness))
+
+    local bottomBoundary = rightBoundary:Clone()
+    bottomBoundary.position2D = world.BOUNDS_CENTER + Vector2(0, -world.BOUNDS_UNSCALED.y - boundaryThickness)
+    bottomBoundary:SetScale2D(Vector2(world.BOUNDS_UNSCALED.x * 2, boundaryThickness))
+
+    -- slight rotation of side boundaries to account for perspective
+    rightBoundary:Rotate2D(40.0)
+    leftBoundary:Rotate2D(-40.0)
+    rightBoundary:Translate2D(Vector2(boundaryThickness / 3 , boundaryThickness / 2))
+    leftBoundary:Translate2D(Vector2(-boundaryThickness / 3 , boundaryThickness / 2))
 end
 
 
