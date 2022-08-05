@@ -8,17 +8,19 @@ world.DoneSettingUp = false
 ---@type Node
 world.PlayerNode = nil
 
----@type Player
-world.PlayerScript = nil
+world.PlayerInputScript = nil
+
+---@type Player[]
+world.PlayerScripts = {}
 
 ---@type Node
 world.DynamicContentParent = nil
 
 
-world.BOUNDS_CENTER = Vector2(0.0, -4.0)
+world.BOUNDS_CENTER = Vector2(0.0, -2.5)
 
 --- assuming world is a square
-world.BOUNDS_UNSCALED = Vector2(12.0, 3.5)
+world.BOUNDS_UNSCALED = Vector2(13.5, 5.8)
 
 world.WORLD_SCALE = Vector2(3.5, 4.0)
 
@@ -30,8 +32,11 @@ function world.CreateDynamicContent()
     world.DynamicContentParent = Scene_:CreateChild("DynamicContent")
 
     -- Create player character
-    world.CreateCharacter(Vector2.ZERO)
+    world.PlayerNode = world.CreateCharacter(Vector2.ZERO)
+    world.PlayerInputScript = world.PlayerNode:CreateScriptObject("PlayerController")
 
+    -- test create another char
+    world.CreateCharacter(Vector2.ONE)
 end
 
 function world.CreateBoundaries()
@@ -63,29 +68,23 @@ function world.CreateBoundaries()
     bottomBoundary:SetScale2D(Vector2(world.BOUNDS_UNSCALED.x * 2, boundaryThickness))
 
     -- slight rotation of side boundaries to account for perspective
-    rightBoundary:Rotate2D(40.0)
-    leftBoundary:Rotate2D(-40.0)
+    rightBoundary:Rotate2D(30.0)
+    leftBoundary:Rotate2D(-30.0)
     rightBoundary:Translate2D(Vector2(boundaryThickness / 3 , boundaryThickness / 2))
     leftBoundary:Translate2D(Vector2(-boundaryThickness / 3 , boundaryThickness / 2))
 end
 
 
+---@return Node @ the created player node
 function world.CreateCharacter(position)
 
-    world.PlayerNode = world.DynamicContentParent:CreateChild("PlayerNode")
-    world.PlayerNode:SetParent(world.DynamicContentParent)
+    local charNode = world.DynamicContentParent:CreateChild("PlayerNode")
+    charNode:SetParent(world.DynamicContentParent)
 
     ---@type Player
-    world.PlayerScript = world.PlayerNode:CreateScriptObject("Player") -- Create a ScriptObject to handle character behavior
+    table.insert(world.PlayerScripts, charNode:CreateScriptObject("Player"))  -- Create a ScriptObject to handle character behavior
 
-end
-
-function world.CreateWatcher(position)
-    local watcherXml = cache:GetResource("XMLFile", "Objects/mballs/watcher.xml")
-    local watcherNode = Scene_:InstantiateXML(watcherXml:GetRoot(), position, Quaternion.IDENTITY)
-    watcherNode:SetParent(world.DynamicContentParent)
-
-    watcherNode:CreateScriptObject("Watcher")
+    return charNode
 end
 
 

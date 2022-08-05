@@ -5,7 +5,7 @@ local mouseConfig = require "LuaScripts/Mouse"
 local world = require "LuaScripts/World"
 local gameAudio = require "LuaScripts/Audio"
 require "LuaScripts/Player"
-require "LuaScripts/Watcher"
+require "LuaScripts/PlayerController"
 
 
 COLMASK_WORLD = 1
@@ -92,7 +92,7 @@ function CreateScene()
 
     local scenarioNode = Scene_:CreateChild("scenario")
     local scenarioSprite = scenarioNode:CreateComponent("StaticSprite2D")
-    scenarioSprite:SetSprite(cache:GetResource("Sprite2D", "Urho2D/rock/tela_05_palco.png"))
+    scenarioSprite:SetSprite(cache:GetResource("Sprite2D", "Urho2D/rock/tela_jogo.png"))
     scenarioSprite:SetLayer(SPRITELAYER_WORLD)
     scenarioNode:SetScale2D(world.WORLD_SCALE)
 

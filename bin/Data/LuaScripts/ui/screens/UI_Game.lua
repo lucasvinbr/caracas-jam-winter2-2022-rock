@@ -21,7 +21,7 @@ end
 ---@param dataPassed table
 Ui.Show = function (instanceRoot, dataPassed)
     instanceRoot:SetVisible(true)
-    world.PlayerScript.timeBar = timeBar
+    --world.PlayerScript.timeBar = timeBar
 end
 
 return Ui

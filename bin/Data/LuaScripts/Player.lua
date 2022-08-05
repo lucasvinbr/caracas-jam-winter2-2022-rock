@@ -4,13 +4,15 @@ local gameAudio = require "LuaScripts/Audio"
 
 ---@class Player : LuaScriptObject
 ---@field timeBar ProgressBar
+---@field body RigidBody2D
+---@field colshape CollisionCircle2D
+---@field spriteNode Node
+---@field animatedSprite AnimatedSprite2D
 
-local JUMP_FORCE = 7.0
 local MOVE_FORCE = 0.8
-local INAIR_MOVE_FORCE = 0.02
 local BRAKE_FORCE = 0.2
-local MOVE_SPEED = 7.0
-local VERTICAL_MOVESPEED_FACTOR = 0.8
+local MOVE_SPEED = 40.0
+local VERTICAL_MOVESPEED_FACTOR = 0.65
 local ATTACK_DURATION = 0.3
 local ATTACK_TIME_BEFORE_HIT = 0.15
 
@@ -21,6 +23,8 @@ local PLAYERSTATE_IDLE = 0
 local PLAYERSTATE_MOVING = 1
 local PLAYERSTATE_ROCKING = 2
 local PLAYERSTATE_ATTACKING = 3
+
+local ROCKING_TIME_TO_WIN = 8.0
 
 
 -- Character script object class
@@ -35,22 +39,26 @@ function Player:Start()
 
     self.timeBar = nil
 
-    self.curPlayerState = PLAYERSTATE_IDLE
     self.wantsToAttack = false
+    self.moveDir = Vector2.ZERO
+
+    self.curPlayerState = PLAYERSTATE_IDLE
+    self.attackIsComplete = false
+
+    -- counter for mutually exclusive actions, like idling and attacking
     self.actionTimeElapsed = 0.0
 
     self.timeSinceLastAttack = 1.0
 
-    ---@type RigidBody2D
     self.body = self.node:CreateComponent("RigidBody2D")
     self.body:SetGravityScale(0.0)
+    self.body:SetLinearDamping(5.0)
     self.body.bodyType = BT_DYNAMIC
     self.body.allowSleep = false
 
-    ---@type CollisionCircle2D
     self.colshape = self.node:CreateComponent("CollisionCircle2D")
     self.colshape.radius = 0.22 -- Set shape size
-    self.colshape.friction = 0.0 -- Set friction
+    self.colshape.friction = 0.5 -- Set friction
     self.colshape.restitution = 0.1 -- Slight bounce
     self.colshape:SetCategoryBits(COLMASK_PLAYER)
 
@@ -66,6 +74,12 @@ function Player:Start()
     self.node:SetScale(4.5)
 end
 
+function Player:UpdateControls(moveDir, wantsToAttack)
+    self.moveDir = moveDir
+    self.wantsToAttack = wantsToAttack
+end
+
+
 function Player:Update(timeStep)
 
     if CurGameState ~= GAMESTATE_PLAYING then
@@ -78,36 +92,13 @@ function Player:Update(timeStep)
     local node = self.node
 
     -- Set direction
-    ---@type Vector3
-    local moveDir = Vector3.ZERO -- Reset
-    local speedX = Clamp(MOVE_SPEED, 0.4, MOVE_SPEED)
-    local speedY = speedX
+    local speedX = MOVE_SPEED
 
-    if input:GetKeyDown(KEY_LEFT) or input:GetKeyDown(KEY_A) then
-        moveDir = moveDir + Vector3.LEFT * speedX
-        self.animatedSprite.flipX = true -- Flip sprite (reset to default play on the X axis)
-    end
-    if input:GetKeyDown(KEY_RIGHT) or input:GetKeyDown(KEY_D) then
-        moveDir = moveDir + Vector3.RIGHT * speedX
-        self.animatedSprite.flipX = false -- Flip sprite (flip animation on the X axis)
+    if self.moveDir ~= Vector2.ZERO then
+        self.animatedSprite.flipX = self.moveDir.x < 0.0
+        self.moveDir = Vector2(self.moveDir.x * speedX, self.moveDir.y * speedX * VERTICAL_MOVESPEED_FACTOR)
     end
 
-    if not moveDir:Equals(Vector3.ZERO) then
-        speedY = speedX * VERTICAL_MOVESPEED_FACTOR
-    end
-
-    if input:GetKeyDown(KEY_UP) or input:GetKeyDown(KEY_W) then
-        moveDir = moveDir + Vector3.UP * speedY
-    end
-    if input:GetKeyDown(KEY_DOWN) or input:GetKeyDown(KEY_S) then
-        moveDir = moveDir + Vector3.DOWN * speedY
-    end
-
-
-    self.wantsToAttack = false
-    if input:GetKeyPress(KEY_SPACE) then
-        self.wantsToAttack = true
-    end
 
     -- if not attacking, we can move
     if self.wantsToAttack and self:CanAttack() then
@@ -117,8 +108,9 @@ function Player:Update(timeStep)
     end
 
     if self.curPlayerState ~= PLAYERSTATE_ATTACKING then
-        if not moveDir:Equals(Vector3.ZERO) and self.canMove then
-            node:Translate(moveDir * timeStep)
+        if not self.moveDir:Equals(Vector2.ZERO) and self.canMove then
+            -- node:Translate2D(self.moveDir * timeStep)
+            self.body:ApplyForceToCenter(self.moveDir, true)
             self.actionTimeElapsed = 0.0
             self.curPlayerState = PLAYERSTATE_MOVING
         else
@@ -133,6 +125,12 @@ function Player:Update(timeStep)
     if self.curPlayerState == PLAYERSTATE_ATTACKING then
         if self.actionTimeElapsed >= ATTACK_DURATION then
             self.curPlayerState = PLAYERSTATE_IDLE
+            self.attackIsComplete = false
+        elseif self.actionTimeElapsed >= ATTACK_TIME_BEFORE_HIT and not self.attackIsComplete then
+            self.attackIsComplete = true
+            -- apply actual attack calculations/effects!
+            log:Write(LOG_DEBUG, "attack goes here!")
+            --Scene_:GetComponent("PhysicsWorld2D"):Raycast()
         end
     end
 
@@ -147,6 +145,10 @@ function Player:Update(timeStep)
         self.animatedSprite:SetAnimation("idle")
     end
 
+
+    -- reset controls
+    self.moveDir = Vector2.ZERO
+    self.wantsToAttack = false
 end
 
 function Player:CanAttack()
