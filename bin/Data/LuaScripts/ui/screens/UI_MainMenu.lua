@@ -6,6 +6,13 @@ local Ui = {}
 
 Ui.screenName = "MainMenu"
 
+local randomMenuSounds = {
+    "Sounds/rock/go_johnny.ogg",
+    "Sounds/rock/i_am_complete.ogg",
+    "Sounds/rock/crowd_cheer.ogg",
+    "Sounds/rock/crowd.ogg",
+}
+
 --- links actions to buttons and etc. Usually, should be run only once
 ---@param instanceRoot UIElement
 Ui.Setup = function (instanceRoot)
@@ -46,6 +53,8 @@ Ui.Show = function (instanceRoot, dataPassed)
     instanceRoot:SetVisible(true)
 
     gameAudio.StartMusic()
+
+    gameAudio.PlayOneShotSoundWithFreqVariation(randomMenuSounds[RandomInt(1, #randomMenuSounds)], 1.0, 2000)
 end
 
 return Ui

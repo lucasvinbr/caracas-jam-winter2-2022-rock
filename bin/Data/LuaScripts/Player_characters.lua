@@ -10,6 +10,8 @@
 ---@field animSpritePath string
 ---@field portraitSpritePath string
 ---@field name string
+---@field voicePitch number
+---@field themeSongPath string
 
 
 ---@type PlayerCharacterData[]
@@ -25,7 +27,8 @@ local charOptions = {
         attackDamage = 1.5,
         attackStunTime = 0.35,
         attackPushForce = 40,
-        timeBeforeRocking = 2.0
+        timeBeforeRocking = 2.0,
+        voicePitch = 1.0
     }
 }
 

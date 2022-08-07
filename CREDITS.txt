@@ -1,16 +1,4 @@
 ASSET CREDITS:
 
-floor texture:
-wooden deck, by RooMan93 (CC0)	https://opengameart.org/content/deck-texture
+All Music by Audionautix.com
 
-wall texture:
-Remix of TRaK's textures Copyright 2012 Iwan Gabovitch <qubodup@gmail.com> Original TRaK4 textures Copyright 2011 By Georges 'TRaK' Grondin drognin@gmail.com http://trak.mercenariesguild.net
-(CC-BY 3.0) https://opengameart.org/content/grey-plastered-wall-trak-remix
-
-monsters:
-
-dilophosaur by lucasvinbr 
-https://sketchfab.com/3d-models/dilophosaur-f6f7187ec44543bb8b971cd58b775643
-
-5 Hit Sounds + Dying by TinyWorlds
-(CC0) https://opengameart.org/content/5-hit-sounds-dying

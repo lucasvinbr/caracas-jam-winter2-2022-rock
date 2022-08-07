@@ -5,6 +5,16 @@
 	<attribute name="Max Anchor" value="1 1" />
 	<attribute name="Pivot" value="0 0" />
 	<attribute name="Enable Anchor" value="true" />
+	<element type="BorderImage">
+		<attribute name="Name" value="crowdImg" />
+		<attribute name="Size" value="1920 203" />
+		<attribute name="Min Anchor" value="0 1" />
+		<attribute name="Max Anchor" value="1 1.2" />
+		<attribute name="Pivot" value="0 1" />
+		<attribute name="Enable Anchor" value="true" />
+		<attribute name="Texture" value="Texture2D;Urho2D/rock/publico.png" />
+		<attribute name="Image Rect" value="0 0 1024 256" />
+	</element>
 	<element>
 		<attribute name="Name" value="playerFields" />
 		<attribute name="Size" value="1920 203" />

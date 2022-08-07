@@ -24,6 +24,14 @@ local PLAYERSTATE_STUNNED = 4
 local VERTICAL_MOVESPEED_FACTOR = 0.6
 -- note: all player sprites should, by default, be looking to the right!
 
+local hitSounds = {
+    "Sounds/rock/hit_00.ogg",
+    "Sounds/rock/hit_01.ogg",
+    "Sounds/rock/hit_02.ogg",
+    "Sounds/rock/hit_03.ogg",
+    "Sounds/rock/hit_04.ogg",
+}
+
 -- Character script object class
 ---@type Player
 Player = ScriptObject()
@@ -214,6 +222,9 @@ function Player:BeAttacked(pushForce, rockbarDamage)
     self.actionTimeElapsed = 0.0
 
     self.rockingBar:SetValue(self.rockingTime / ROCKING_TIME_TO_WIN)
+
+    local voiceFrequency = 22050 * self.charData.voicePitch + Random(-1000, 1000)
+    gameAudio.PlayOneShotSoundWithFrequency(hitSounds[RandomInt(1, #hitSounds)], 0.7, voiceFrequency)
 end
 
 function Player:ForceAnim(animName)

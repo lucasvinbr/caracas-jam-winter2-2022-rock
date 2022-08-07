@@ -8,6 +8,11 @@ local Ui = {}
 
 Ui.screenName = "Endgame"
 
+local endgameSounds = {
+    "Sounds/rock/i_am_complete.ogg",
+    "Sounds/rock/crowd_cheer.ogg",
+    "Sounds/rock/crowd.ogg",
+}
 
 --- links actions to buttons and etc. Usually, should be run only once
 ---@param instanceRoot UIElement
@@ -32,9 +37,9 @@ Ui.Show = function(instanceRoot, dataPassed)
         winnerName = "nameless"
     end
 
-    endgameText.text = "GAME SET!"
+    endgameText.text = "FIM DE JOGO!"
 
-    gameAudio.PlayOneShotSoundWithFrequency("Sounds/rock/arrival.ogg", 1.0, 22050, false)
+    gameAudio.PlayOneShotSoundWithFreqVariation(endgameSounds[RandomInt(1, #endgameSounds)], 1.0, 2000)
 
     for _, plyr in ipairs(world.PlayerScripts) do
         plyr.playerArrowSprite:SetEnabled(false)
@@ -53,7 +58,7 @@ Ui.Show = function(instanceRoot, dataPassed)
         coroutine.sleep(0.95)
         endgameText.text = ""
         coroutine.sleep(1.05)
-        endgameText.text = "WINNER: " .. winnerName
+        endgameText.text = winnerName .. " VENCEU!"
         endgameText:SetColor(C_TOPLEFT, winner.playerColor)
 
         winner.animatedSprite:SetLayer(SPRITELAYER_ENDGAME_FADE + 1)
