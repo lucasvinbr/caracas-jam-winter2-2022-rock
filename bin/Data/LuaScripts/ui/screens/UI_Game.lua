@@ -7,14 +7,14 @@ local Ui = {}
 Ui.screenName = "Game"
 
 
----@type ProgressBar
-local timeBar = nil
+---@type UIElement
+local playerEntriesParent = nil
 
 
 --- links actions to buttons and etc. Usually, should be run only once
 ---@param instanceRoot UIElement
 Ui.Setup = function (instanceRoot)
-    timeBar = instanceRoot:GetChild("BottomBar", true)
+    playerEntriesParent = instanceRoot:GetChild("playerFields", true)
 end
 
 ---@param instanceRoot UIElement
@@ -22,6 +22,24 @@ end
 Ui.Show = function (instanceRoot, dataPassed)
     instanceRoot:SetVisible(true)
     --world.PlayerScript.timeBar = timeBar
+end
+
+--- returns the player's rocking progress bar
+---@param playerData PlayerCharacterData
+---@return ProgressBar
+Ui.SetupPlayer = function (playerData)
+    local playerEntriesCount = playerEntriesParent:GetNumChildren() - 2 -- there are 2 spacers as children
+    local newEntry = ui:LoadLayout(cache:GetResource("XMLFile", "UI/rock/screen_game_player_entry.xml"))
+    newEntry:SetParent(playerEntriesParent, playerEntriesCount + 1)
+    local playerPicImg = newEntry:GetChild("playerEntryPic") --[[@as BorderImage]]
+    local playerPicTexture = cache:GetResource("Texture2D", playerData.portraitSpritePath)
+    -- this seems to work? no need to tolua_cast?
+    playerPicImg:SetTexture(playerPicTexture)
+    playerPicImg:SetFullImageRect()
+
+    local playerProgBar = newEntry:GetChild("playerEntryProgBar") --[[@as ProgressBar]]
+    playerProgBar:SetValue(0.0)
+    return playerProgBar
 end
 
 return Ui

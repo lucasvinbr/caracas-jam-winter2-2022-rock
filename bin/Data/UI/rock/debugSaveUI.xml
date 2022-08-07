@@ -431,7 +431,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading resource Urho2D/rock/johnny/attack_1.png" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading resource Urho2D/rock/johnny/attack_1.png" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -443,7 +443,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading resource Urho2D/rock/johnny/attack_2.png" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading resource Urho2D/rock/johnny/attack_2.png" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -455,7 +455,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading resource Urho2D/rock/johnny/attack_3.png" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading resource Urho2D/rock/johnny/attack_3.png" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -467,7 +467,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading resource Urho2D/rock/johnny/attack_4.png" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading resource Urho2D/rock/johnny/attack_4.png" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -479,7 +479,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: loading done!" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: loading done!" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -491,7 +491,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading resource UI/rock/screen_game.xml" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading resource UI/rock/screen_game.xml" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -503,7 +503,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading UI layout UI/rock/screen_game.xml" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading UI layout UI/rock/screen_game.xml" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -515,7 +515,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading resource UI/rock/screen_game_player_entry.xml" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading resource UI/rock/screen_game_player_entry.xml" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -527,7 +527,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading UI layout UI/rock/screen_game_player_entry.xml" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading UI layout UI/rock/screen_game_player_entry.xml" />
 					</element>
 					<element type="Text" style="ConsoleErrorText">
 						<attribute name="Pivot" value="0 0" />
@@ -539,7 +539,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] ERROR: Could not load unknown resource type 2B8AF19B" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] ERROR: Could not load unknown resource type 2B8AF19B" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -551,7 +551,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Loading UI layout UI/rock/screen_game_player_entry.xml" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Loading UI layout UI/rock/screen_game_player_entry.xml" />
 					</element>
 					<element type="Text" style="ConsoleErrorText">
 						<attribute name="Pivot" value="0 0" />
@@ -563,7 +563,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] ERROR: Could not load unknown resource type 2B8AF19B" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] ERROR: Could not load unknown resource type 2B8AF19B" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -575,7 +575,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Resized scratch buffer to size 288" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Resized scratch buffer to size 288" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -587,7 +587,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Compiled vertex shader Basic(VERTEXCOLOR)" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Compiled vertex shader Basic(VERTEXCOLOR)" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -599,7 +599,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Compiled pixel shader Basic(VERTEXCOLOR)" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Compiled pixel shader Basic(VERTEXCOLOR)" />
 					</element>
 					<element type="Text" style="ConsoleDebugText">
 						<attribute name="Pivot" value="0 0" />
@@ -611,7 +611,7 @@
 						<attribute name="Is Enabled" value="true" />
 						<attribute name="Selection Color" value="0.23 0.3 0.27 1" />
 						<attribute name="Hover Color" value="0.3 0.4 0.32 1" />
-						<attribute name="Text" value="[Sat Aug  6 22:56:45 2022] DEBUG: Linked vertex shader Basic(VERTEXCOLOR) and pixel shader Basic(VERTEXCOLOR)" />
+						<attribute name="Text" value="[Sat Aug  6 22:57:47 2022] DEBUG: Linked vertex shader Basic(VERTEXCOLOR) and pixel shader Basic(VERTEXCOLOR)" />
 					</element>
 				</element>
 			</element>

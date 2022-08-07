@@ -14,6 +14,7 @@ COLMASK_OBJS = 4
 
 SPRITELAYER_WORLD = 0
 SPRITELAYER_PLAYER = 4
+SPRITELAYER_PLAYER_ARROW = 8
 
 TAG_PLAYER = "player"
 TAG_ENEMY = "enemy"
@@ -25,6 +26,19 @@ GAMESTATE_PLAYING = 4
 GAMESTATE_ENDING = 8
 
 CurGameState = GAMESTATE_ENDED
+
+ROCKING_TIME_TO_WIN = 8.0
+
+PLAYER_COLORS = {
+  Color(1.0, 0.0, 0.0),
+  Color(0.0, 0.0, 1.0),
+  Color(0.0, 1.0, 0.0),
+  Color(1.0, 0.0, 1.0),
+  Color(1.0, 1.0, 0.0),
+  Color(0.0, 1.0, 1.0),
+  Color(1.0, 1.0, 1.0),
+  Color(0.0, 0.0, 0.0),
+}
 
 ProjectFolderName = "rock"
 
@@ -43,7 +57,6 @@ function Start()
   SetRandomSeed(os.time() % 1000)
   -- Set custom window Title & Icon
   SetWindowTitleAndIcon()
-
   -- Execute debug stuff startup
   GameDebug.DebugSetup()
 

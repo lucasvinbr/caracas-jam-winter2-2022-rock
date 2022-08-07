@@ -42,7 +42,7 @@ local function GameDebugHandleKeyDown(eventType, eventData)
         -- uiManager.ShowUI("MainMenu")
     elseif key == KEY_F5 then
         Scene_:SaveXML(fileSystem:GetProgramDir().."Data/Scenes/".. ProjectFolderName .. "/debugSave.xml")
-        ui.root:SaveXML(fileSystem:GetProgramDir().."Data/debugSaveUI.xml")
+        ui.root:SaveXML(fileSystem:GetProgramDir().."Data/UI/" .. ProjectFolderName .. "/debugSaveUI.xml")
     end
 
 end

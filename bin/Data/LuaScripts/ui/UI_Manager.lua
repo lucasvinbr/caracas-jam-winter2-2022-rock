@@ -10,7 +10,7 @@ GameUi.StoredUis = {}
 
 -- if necessary, loads, then returns the specified UI. The Ui must have already been added in the StoredUis list
 ---@param UIname string
----@return UIElement
+---@return UIElement|nil
 function GameUi.GetUI(UIname)
     local targetUi = GameUi.StoredUis[UIname]
     if targetUi ~= nil then
@@ -22,6 +22,8 @@ function GameUi.GetUI(UIname)
             return GameUi.GetUI(UIname)
         end
     end
+
+    return nil
 end
 
 

@@ -5,18 +5,13 @@ local world = {}
 
 world.DoneSettingUp = false
 
----@type Node
-world.PlayerNode = nil
-
-world.PlayerInputScript = nil
-
 ---@type Player[]
 world.PlayerScripts = {}
 
 ---@type Node
 world.DynamicContentParent = nil
 
-
+---@type Vector2
 world.BOUNDS_CENTER = Vector2(0.0, -2.5)
 
 --- assuming world is a square
@@ -31,12 +26,14 @@ function world.CreateDynamicContent()
 
     world.DynamicContentParent = Scene_:CreateChild("DynamicContent")
 
-    -- Create player character
-    world.PlayerNode = world.CreateCharacter(Vector2.ZERO)
-    world.PlayerInputScript = world.PlayerNode:CreateScriptObject("PlayerController")
+    -- Create player character and the input handler
+    local playerChar = world.CreateCharacter(Vector2.ZERO)
+    playerChar.node:CreateScriptObject("PlayerController")
+    playerChar:SetupColor(PLAYER_COLORS[1])
 
     -- test create another char
-    world.CreateCharacter(Vector2.ONE)
+    local aiChar = world.CreateCharacter(Vector2.ONE)
+    aiChar:SetupColor(PLAYER_COLORS[2])
 end
 
 function world.CreateBoundaries()
@@ -75,16 +72,18 @@ function world.CreateBoundaries()
 end
 
 
----@return Node @ the created player node
+---@return Player @ the created player script
 function world.CreateCharacter(position)
 
     local charNode = world.DynamicContentParent:CreateChild("PlayerNode")
     charNode:SetParent(world.DynamicContentParent)
 
     ---@type Player
-    table.insert(world.PlayerScripts, charNode:CreateScriptObject("Player"))  -- Create a ScriptObject to handle character behavior
+    local playerScript = charNode:CreateScriptObject("Player")
+    table.insert(world.PlayerScripts, playerScript)  -- Create a ScriptObject to handle character behavior
 
-    return charNode
+
+    return playerScript
 end
 
 

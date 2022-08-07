@@ -1,31 +1,28 @@
 local uiManager = require "LuaScripts/ui/UI_Manager"
 local world = require "LuaScripts/World"
 local gameAudio = require "LuaScripts/Audio"
+local gameUi = require "LuaScripts/ui/screens/UI_Game"
+local playerCharOptions = require "LuaScripts/Player_characters"
 
 ---@class Player : LuaScriptObject
----@field timeBar ProgressBar
+---@field rockingBar ProgressBar
 ---@field body RigidBody2D
 ---@field colshape CollisionCircle2D
 ---@field spriteNode Node
 ---@field animatedSprite AnimatedSprite2D
-
-local MOVE_FORCE = 0.8
-local BRAKE_FORCE = 0.2
-local MOVE_SPEED = 40.0
-local VERTICAL_MOVESPEED_FACTOR = 0.65
-local ATTACK_DURATION = 0.3
-local ATTACK_TIME_BEFORE_HIT = 0.15
-
-
-local TIME_BEFORE_ROCKING = 2.0
+---@field charData PlayerCharacterData
+---@field playerColor Color
+---@field playerArrowNode Node
+---@field playerArrowSprite StaticSprite2D
 
 local PLAYERSTATE_IDLE = 0
 local PLAYERSTATE_MOVING = 1
 local PLAYERSTATE_ROCKING = 2
 local PLAYERSTATE_ATTACKING = 3
+local PLAYERSTATE_STUNNED = 4
 
-local ROCKING_TIME_TO_WIN = 8.0
-
+local VERTICAL_MOVESPEED_FACTOR = 0.6
+-- note: all player sprites should, by default, be looking to the right!
 
 -- Character script object class
 ---@type Player
@@ -36,8 +33,6 @@ Player.__index = Player
 function Player:Start()
     self.canCountTime = false
     self.canMove = true
-
-    self.timeBar = nil
 
     self.wantsToAttack = false
     self.moveDir = Vector2.ZERO
@@ -50,6 +45,9 @@ function Player:Start()
 
     self.timeSinceLastAttack = 1.0
 
+    self.rockingTime = 0.0
+
+    self.charData = playerCharOptions[RandomInt(1,#playerCharOptions)]
     self.body = self.node:CreateComponent("RigidBody2D")
     self.body:SetGravityScale(0.0)
     self.body:SetLinearDamping(5.0)
@@ -61,17 +59,35 @@ function Player:Start()
     self.colshape.friction = 0.5 -- Set friction
     self.colshape.restitution = 0.1 -- Slight bounce
     self.colshape:SetCategoryBits(COLMASK_PLAYER)
+    self.colshape:SetMaskBits(COLMASK_WORLD + COLMASK_PLAYER)
 
     self.spriteNode = self.node:CreateChild("playerSpriteNode")
-
     self.spriteNode:SetPosition2D(0, 0.4)
 
     self.animatedSprite = self.spriteNode:CreateComponent("AnimatedSprite2D")
-    self.animatedSprite.animationSet = cache:GetResource("AnimationSet2D", "Urho2D/rock/player.scml")
+    self.animatedSprite.animationSet = cache:GetResource("AnimationSet2D", self.charData.animSpritePath)
     self.animatedSprite.animation = "idle"
     self.animatedSprite:SetLayer(SPRITELAYER_PLAYER)
 
+    self.playerArrowNode = self.spriteNode:CreateChild("playerArrowNode")
+    self.playerArrowNode:SetPosition2D(0, 0.5)
+    self.playerArrowSprite = self.playerArrowNode:CreateComponent("StaticSprite2D")
+    self.playerArrowSprite:SetSprite(cache:GetResource("Sprite2D", "Urho2D/rock/playerTriangle.png"))
+    self.playerArrowSprite:SetLayer(SPRITELAYER_PLAYER_ARROW)
+    self.playerArrowNode:SetScale(0.75)
+
     self.node:SetScale(4.5)
+
+end
+
+function Player:DelayedStart()
+    self.rockingBar = gameUi.SetupPlayer(self.charData)
+    self.playerArrowSprite:SetColor(self.playerColor)
+    self.rockingBar:SetColor(self.playerColor)
+end
+
+function Player:SetupColor(playerColor)
+    self.playerColor = playerColor
 end
 
 function Player:UpdateControls(moveDir, wantsToAttack)
@@ -92,7 +108,7 @@ function Player:Update(timeStep)
     local node = self.node
 
     -- Set direction
-    local speedX = MOVE_SPEED
+    local speedX = self.charData.moveSpeed
 
     if self.moveDir ~= Vector2.ZERO then
         self.animatedSprite.flipX = self.moveDir.x < 0.0
@@ -107,30 +123,52 @@ function Player:Update(timeStep)
         self.curPlayerState = PLAYERSTATE_ATTACKING
     end
 
-    if self.curPlayerState ~= PLAYERSTATE_ATTACKING then
-        if not self.moveDir:Equals(Vector2.ZERO) and self.canMove then
+    if self:CanMove() then
+        if not self.moveDir:Equals(Vector2.ZERO) then
             -- node:Translate2D(self.moveDir * timeStep)
             self.body:ApplyForceToCenter(self.moveDir, true)
             self.actionTimeElapsed = 0.0
             self.curPlayerState = PLAYERSTATE_MOVING
         else
             self.curPlayerState = PLAYERSTATE_IDLE
-            if self.actionTimeElapsed >= TIME_BEFORE_ROCKING then
+            if self.actionTimeElapsed >= self.charData.timeBeforeRocking then
                 self.curPlayerState = PLAYERSTATE_ROCKING
+                self.rockingTime = self.rockingTime + timeStep
+                -- update rocking bar
+                self.rockingBar:SetValue(self.rockingTime / ROCKING_TIME_TO_WIN)
+
+                -- TODO victory check
             end
         end
     end
 
 
     if self.curPlayerState == PLAYERSTATE_ATTACKING then
-        if self.actionTimeElapsed >= ATTACK_DURATION then
+        if self.actionTimeElapsed >= self.charData.attackDuration then
             self.curPlayerState = PLAYERSTATE_IDLE
             self.attackIsComplete = false
-        elseif self.actionTimeElapsed >= ATTACK_TIME_BEFORE_HIT and not self.attackIsComplete then
+        elseif self.actionTimeElapsed >= self.charData.attackTimeBeforeHit and not self.attackIsComplete then
             self.attackIsComplete = true
+
             -- apply actual attack calculations/effects!
-            log:Write(LOG_DEBUG, "attack goes here!")
-            --Scene_:GetComponent("PhysicsWorld2D"):Raycast()
+            -- log:Write(LOG_DEBUG, "attack goes here!")
+            local attackDir = Vector2.RIGHT
+            if self.animatedSprite.flipX then
+               attackDir = Vector2.LEFT
+            end
+
+            for i, rayResult in ipairs(Scene_:GetComponent("PhysicsWorld2D"):
+              Raycast(node.position2D, node.position2D + attackDir * self.charData.attackReach, COLMASK_PLAYER)) do
+                if rayResult.body == self.body then
+                    log:Write(LOG_DEBUG, "we've hit ourselves!")
+                else
+                    -- log:Write(LOG_DEBUG, "we've hit someone else!")
+                    local enemyPlayerScript = rayResult.body:GetNode():GetScriptObject("Player") --[[@as Player]]
+                    if enemyPlayerScript then
+                        enemyPlayerScript:BeAttacked(attackDir * self.charData.attackPushForce, self.charData.attackDamage)
+                    end
+                end
+            end
         end
     end
 
@@ -152,18 +190,20 @@ function Player:Update(timeStep)
 end
 
 function Player:CanAttack()
-    return self.timeSinceLastAttack >= ATTACK_DURATION
+    return self.curPlayerState ~= PLAYERSTATE_STUNNED and self.timeSinceLastAttack >= self.charData.attackDuration
 end
 
-function Player:HandleCollisionStart(eventType, eventData)
+function Player:CanMove()
+    return self.curPlayerState ~= PLAYERSTATE_STUNNED and self.curPlayerState ~= PLAYERSTATE_ATTACKING
+end
 
-    if CurGameState ~= GAMESTATE_PLAYING then return end
+--- attacks push the attacked player around, makes them stop rocking and reduces their rock bar, preventing them from winning the game
+---@param pushForce Vector2
+---@param rockbarDamage number
+function Player:BeAttacked(pushForce, rockbarDamage)
+    self.body:ApplyLinearImpulseToCenter(pushForce, true)
+    self.rockingTime = math.max(0.0, self.rockingTime - rockbarDamage)
+    self.actionTimeElapsed = 0.0
 
-    local velocity = self.body.linearVelocity:Length()
-
-    gameAudio.PlayOneShotSoundWithFrequency(hitSounds[RandomInt(#hitSounds) + 1],
-     1.0,
-      20050 + Lerp(0, 20000, velocity / 20.0),
-       true,
-        self.node)
+    self.rockingBar:SetValue(self.rockingTime / ROCKING_TIME_TO_WIN)
 end
