@@ -19,9 +19,9 @@ function GameAudio.SetupSound()
 end
 
 
-function GameAudio.StartMusic()
+function GameAudio.StartMusic(musicFilePath)
   ---@type Sound
-  local musicFile = cache:GetResource("Sound","Music/duality/gameplayv1.ogg")
+  local musicFile = cache:GetResource("Sound",musicFilePath)
 
   if musicFile then
     musicFile.looped = true

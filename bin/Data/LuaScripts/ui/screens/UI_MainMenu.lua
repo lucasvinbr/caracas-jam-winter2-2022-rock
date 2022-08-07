@@ -52,7 +52,7 @@ end
 Ui.Show = function (instanceRoot, dataPassed)
     instanceRoot:SetVisible(true)
 
-    gameAudio.StartMusic()
+    gameAudio.StopMusic()
 
     gameAudio.PlayOneShotSoundWithFreqVariation(randomMenuSounds[RandomInt(1, #randomMenuSounds)], 1.0, 2000)
 end

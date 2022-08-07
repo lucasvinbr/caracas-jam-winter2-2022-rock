@@ -1,3 +1,5 @@
+local gameAudio = require "LuaScripts/Audio"
+
 ---@class PlayerController : LuaScriptObject
 
 
@@ -14,6 +16,7 @@ function PlayerController:Start()
     self.wantsToAttack = false
     self.moveDir = Vector2.ZERO
 
+    gameAudio.StartMusic(self.playerScript.charData.themeSongPath)
 end
 
 function PlayerController:Update(timeStep)

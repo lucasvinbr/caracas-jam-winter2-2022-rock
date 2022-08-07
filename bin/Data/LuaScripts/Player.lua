@@ -32,6 +32,8 @@ local hitSounds = {
     "Sounds/rock/hit_04.ogg",
 }
 
+local cheerSound = "Sounds/rock/yeah.ogg"
+
 -- Character script object class
 ---@type Player
 Player = ScriptObject()
@@ -229,4 +231,11 @@ end
 
 function Player:ForceAnim(animName)
     self.animatedSprite:SetAnimation(animName)
+end
+
+function Player:PlayVictorySound()
+    local voiceFrequency = 22050 * self.charData.voicePitch + Random(-1000, 1000)
+    gameAudio.PlayOneShotSoundWithFrequency(cheerSound, 1.0, voiceFrequency)
+
+    gameAudio.StartMusic(self.charData.themeSongPath)
 end

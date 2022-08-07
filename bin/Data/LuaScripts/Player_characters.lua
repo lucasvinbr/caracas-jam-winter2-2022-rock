@@ -26,9 +26,10 @@ local charOptions = {
         attackReach = 4.5,
         attackDamage = 1.5,
         attackStunTime = 0.35,
-        attackPushForce = 40,
-        timeBeforeRocking = 2.0,
-        voicePitch = 1.0
+        attackPushForce = 80,
+        timeBeforeRocking = 1.0,
+        voicePitch = 1.0,
+        themeSongPath = "Music/rock/GreenDaze.ogg"
     }
 }
 

@@ -39,6 +39,7 @@ Ui.Show = function(instanceRoot, dataPassed)
 
     endgameText.text = "FIM DE JOGO!"
 
+    gameAudio.StopMusic()
     gameAudio.PlayOneShotSoundWithFreqVariation(endgameSounds[RandomInt(1, #endgameSounds)], 1.0, 2000)
 
     for _, plyr in ipairs(world.PlayerScripts) do
@@ -63,6 +64,7 @@ Ui.Show = function(instanceRoot, dataPassed)
 
         winner.animatedSprite:SetLayer(SPRITELAYER_ENDGAME_FADE + 1)
         winner:ForceAnim("rock")
+        winner:PlayVictorySound()
 
         coroutine.sleep(4.0)
         world.Cleanup()
