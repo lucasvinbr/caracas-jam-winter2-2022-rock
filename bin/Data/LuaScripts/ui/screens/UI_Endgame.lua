@@ -40,7 +40,7 @@ Ui.Show = function(instanceRoot, dataPassed)
     endgameText.text = "FIM DE JOGO!"
 
     gameAudio.StopMusic()
-    gameAudio.PlayOneShotSoundWithFreqVariation(endgameSounds[RandomInt(1, #endgameSounds)], 1.0, 2000)
+    gameAudio.PlayOneShotSoundWithFreqVariation(endgameSounds[RandomInt(1, #endgameSounds + 1)], 1.0, 2000)
 
     for _, plyr in ipairs(world.PlayerScripts) do
         plyr.playerArrowSprite:SetEnabled(false)

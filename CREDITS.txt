@@ -2,3 +2,8 @@ ASSET CREDITS:
 
 All Music by Audionautix.com
 
+Voices by Logan Quasar
+Character sprites by Renato Eike
+UI and background by MorenaSBC
+
+font used: another danger (demo version)

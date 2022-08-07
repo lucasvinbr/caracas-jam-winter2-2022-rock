@@ -13,80 +13,100 @@
         <file id="9" name="johnny/attack_4.png" width="164" height="120" pivot_x="0.2" pivot_y="0.5"/>
         <file id="10" name="johnny/walk.png" width="81" height="120" pivot_x="0" pivot_y="1"/>
     </folder>
+    <folder id="1" name="countrygirl">
+        <file id="0" name="countrygirl/CountryGirlStatic1.png" width="186" height="320" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="countrygirl/CountryGirlRock1.png" width="146" height="320" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="countrygirl/CountryGirlRock2.png" width="160" height="328" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="countrygirl/CountrygirlWalk1.png" width="208" height="321" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="countrygirl/Countrygirleffect1.png" width="114" height="320" pivot_x="0" pivot_y="1"/>
+        <file id="5" name="countrygirl/Countrygirlattack.png" width="255" height="321" pivot_x="0" pivot_y="1"/>
+    </folder>
     <entity id="0" name="entity_000">
-        <animation id="0" name="attack" length="250" interval="100">
+        <animation id="0" name="attack" length="500" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
                 </key>
-                <key id="1" time="20">
+                <key id="1" time="12">
                     <object_ref id="0" timeline="0" key="1" z_index="0"/>
                 </key>
-                <key id="2" time="50">
+                <key id="2" time="114">
                     <object_ref id="0" timeline="0" key="2" z_index="0"/>
                 </key>
-                <key id="3" time="70">
+                <key id="3" time="126">
                     <object_ref id="0" timeline="0" key="3" z_index="0"/>
                 </key>
-                <key id="4" time="180">
+                <key id="4" time="210">
                     <object_ref id="0" timeline="0" key="4" z_index="0"/>
                 </key>
+                <key id="5" time="274">
+                    <object_ref id="0" timeline="0" key="5" z_index="0"/>
+                </key>
             </mainline>
             <timeline id="0" name="1">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" angle="0"/>
+                    <object folder="1" file="0" x="-67.857143" y="156.547619" angle="0"/>
                 </key>
-                <key id="1" time="20" spin="0">
-                    <object folder="0" file="6" angle="0"/>
+                <key id="1" time="12">
+                    <object folder="1" file="4" x="-67.857143" y="156.547619" angle="0"/>
                 </key>
-                <key id="2" time="50" spin="0">
-                    <object folder="0" file="7" angle="0"/>
+                <key id="2" time="114" spin="-1">
+                    <object folder="1" file="4" x="-85.119048" y="140.47619" angle="10.069063" scale_x="1"/>
                 </key>
-                <key id="3" time="70" spin="0">
-                    <object folder="0" file="8" angle="0"/>
+                <key id="3" time="126" spin="-1">
+                    <object folder="1" file="5" x="-84.582408" y="140.97582" angle="9.756035" scale_x="1"/>
                 </key>
-                <key id="4" time="180" spin="0">
-                    <object folder="0" file="9" angle="0"/>
+                <key id="4" time="210">
+                    <object folder="1" file="5" x="-73.53812" y="148.939057" angle="357.150468" scale_x="1" scale_y="1"/>
+                </key>
+                <key id="5" time="274" spin="0">
+                    <object folder="1" file="0" x="-72.702682" y="150.057964" angle="0" scale_x="1" scale_y="1"/>
                 </key>
             </timeline>
         </animation>
-        <animation id="1" name="idle" length="300" interval="100">
+        <animation id="1" name="stunned" length="100" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
                 </key>
-                <key id="1" time="150">
+            </mainline>
+            <timeline id="0" name="Countrygirleffect1">
+                <key id="0" spin="0">
+                    <object folder="1" file="4" x="-101.190476" y="135.714286" angle="14.036243"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="2" name="idle" length="300" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="1">
+                <key id="0" spin="0">
+                    <object folder="1" file="0" x="-61.997406" y="152.735316" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="3" name="rock" length="300" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="140">
                     <object_ref id="0" timeline="0" key="1" z_index="0"/>
                 </key>
             </mainline>
             <timeline id="0" name="1">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" angle="0"/>
+                    <object folder="1" file="1" x="-65.270057" y="159.391791" angle="0"/>
                 </key>
-                <key id="1" time="150" spin="0">
-                    <object folder="0" file="1" angle="0"/>
-                </key>
-            </timeline>
-        </animation>
-        <animation id="2" name="rock" length="150" interval="100">
-            <mainline>
-                <key id="0">
-                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
-                </key>
-                <key id="1" time="70">
-                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
-                </key>
-            </mainline>
-            <timeline id="0" name="1">
-                <key id="0" spin="0">
-                    <object folder="0" file="2" x="-0.389105" y="-23.346304" angle="0"/>
-                </key>
-                <key id="1" time="70" spin="0">
-                    <object folder="0" file="3" x="-0.389105" y="-23.346304" angle="0"/>
+                <key id="1" time="140" spin="0">
+                    <object folder="1" file="2" x="-64.28047" y="159.391791" angle="0"/>
                 </key>
             </timeline>
         </animation>
-        <animation id="3" name="walk" length="350" interval="100">
+        <animation id="4" name="walk" length="350" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
@@ -97,10 +117,10 @@
             </mainline>
             <timeline id="0" name="walk">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-2.718587" y="-1.537769" pivot_x="0.494851" pivot_y="0.481349"/>
+                    <object folder="1" file="3" x="23.471889" y="-5.109198" pivot_x="0.494851" pivot_y="0.481349" angle="0"/>
                 </key>
                 <key id="1" time="173" spin="0">
-                    <object folder="0" file="1" x="-2.718587" y="-1.537769" pivot_x="0.494851" pivot_y="0.481349"/>
+                    <object folder="1" file="0" x="23.471889" y="-5.109198" pivot_x="0.494851" pivot_y="0.481349" angle="0"/>
                 </key>
             </timeline>
         </animation>

@@ -86,21 +86,15 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="3" name="walk" length="350" interval="100">
+        <animation id="3" name="walk" length="1000" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
                 </key>
-                <key id="1" time="173">
-                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
-                </key>
             </mainline>
             <timeline id="0" name="walk">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-2.718587" y="-1.537769" pivot_x="0.494851" pivot_y="0.481349"/>
-                </key>
-                <key id="1" time="173" spin="0">
-                    <object folder="0" file="1" x="-2.718587" y="-1.537769" pivot_x="0.494851" pivot_y="0.481349"/>
+                    <object folder="0" file="10" x="-37.743191" y="61.089494"/>
                 </key>
             </timeline>
         </animation>

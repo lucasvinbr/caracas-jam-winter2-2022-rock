@@ -57,7 +57,7 @@ function Player:Start()
 
     self.rockingTime = 0.0
 
-    self.charData = playerCharOptions[RandomInt(1,#playerCharOptions)]
+    self.charData = playerCharOptions[RandomInt(1,#playerCharOptions + 1)]
     self.body = self.node:CreateComponent("RigidBody2D")
     self.body:SetGravityScale(0.0)
     self.body:SetLinearDamping(5.0)
@@ -79,14 +79,16 @@ function Player:Start()
     self.animatedSprite.animation = "idle"
     self.animatedSprite:SetLayer(SPRITELAYER_PLAYER)
 
+    self.spriteNode:SetScale(self.charData.spriteScaling)
+
     self.playerArrowNode = self.spriteNode:CreateChild("playerArrowNode")
-    self.playerArrowNode:SetPosition2D(0, 0.5)
+    self.playerArrowNode:SetPosition2D(0, 0.7 / self.charData.spriteScaling)
     self.playerArrowSprite = self.playerArrowNode:CreateComponent("StaticSprite2D")
     self.playerArrowSprite:SetSprite(cache:GetResource("Sprite2D", "Urho2D/rock/playerTriangle.png"))
     self.playerArrowSprite:SetLayer(SPRITELAYER_PLAYER_ARROW)
-    self.playerArrowNode:SetScale(0.75)
+    self.playerArrowNode:SetWorldScale2D(Vector2.ONE * 0.75)
 
-    self.node:SetScale(4.5)
+    self.node:SetScale(4.0)
 
 end
 
@@ -190,7 +192,9 @@ function Player:Update(timeStep)
     elseif self.curPlayerState == PLAYERSTATE_ATTACKING then
         self.animatedSprite:SetAnimation("attack")
     elseif self.curPlayerState == PLAYERSTATE_MOVING then
-        self.animatedSprite:SetAnimation("idle")
+        self.animatedSprite:SetAnimation("walk")
+    elseif self.curPlayerState == PLAYERSTATE_STUNNED then
+        self.animatedSprite:SetAnimation("stunned")
     else
         self.animatedSprite:SetAnimation("idle")
     end
@@ -226,7 +230,7 @@ function Player:BeAttacked(pushForce, rockbarDamage)
     self.rockingBar:SetValue(self.rockingTime / ROCKING_TIME_TO_WIN)
 
     local voiceFrequency = 22050 * self.charData.voicePitch + Random(-1000, 1000)
-    gameAudio.PlayOneShotSoundWithFrequency(hitSounds[RandomInt(1, #hitSounds)], 0.7, voiceFrequency)
+    gameAudio.PlayOneShotSoundWithFrequency(hitSounds[RandomInt(1, #hitSounds + 1)], 0.7, voiceFrequency)
 end
 
 function Player:ForceAnim(animName)

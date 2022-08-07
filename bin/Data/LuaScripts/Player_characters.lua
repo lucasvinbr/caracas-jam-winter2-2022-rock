@@ -9,6 +9,7 @@
 ---@field moveSpeed number
 ---@field animSpritePath string
 ---@field portraitSpritePath string
+---@field spriteScaling number
 ---@field name string
 ---@field voicePitch number
 ---@field themeSongPath string
@@ -20,6 +21,7 @@ local charOptions = {
         name = "Johnny",
         animSpritePath = "Urho2D/rock/johnny.scml",
         portraitSpritePath = "Urho2D/rock/portrait_johnny.png",
+        spriteScaling = 1.0,
         moveSpeed = 40.0,
         attackDuration = 0.3,
         attackTimeBeforeHit = 0.15,
@@ -30,6 +32,22 @@ local charOptions = {
         timeBeforeRocking = 1.0,
         voicePitch = 1.0,
         themeSongPath = "Music/rock/GreenDaze.ogg"
+    },
+    {
+        name = "Countrygirl",
+        animSpritePath = "Urho2D/rock/countrygirl.scml",
+        portraitSpritePath = "Urho2D/rock/portrait_countrygirl.png",
+        spriteScaling = 0.4,
+        moveSpeed = 60.0,
+        attackDuration = 0.3,
+        attackTimeBeforeHit = 0.15,
+        attackReach = 3.5,
+        attackDamage = 1.3,
+        attackStunTime = 0.55,
+        attackPushForce = 60,
+        timeBeforeRocking = 1.0,
+        voicePitch = 1.6,
+        themeSongPath = "Music/rock/TexasTechno.ogg"
     }
 }
 

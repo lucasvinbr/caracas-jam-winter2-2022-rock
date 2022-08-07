@@ -54,7 +54,7 @@ Ui.Show = function (instanceRoot, dataPassed)
 
     gameAudio.StopMusic()
 
-    gameAudio.PlayOneShotSoundWithFreqVariation(randomMenuSounds[RandomInt(1, #randomMenuSounds)], 1.0, 2000)
+    gameAudio.PlayOneShotSoundWithFreqVariation(randomMenuSounds[RandomInt(1, #randomMenuSounds + 1)], 1.0, 2000)
 end
 
 return Ui
