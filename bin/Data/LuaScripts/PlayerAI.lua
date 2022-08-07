@@ -88,7 +88,9 @@ end
 
 function PlayerAI:UpdateTargets()
     local winningPlyr = nil
+    local closestPlyr = nil
     local topRockingValue = 0.0
+    local smallestPlyrDist = 1000
 
     self.attackTarget = nil
     self.iWannaRock = true
@@ -99,6 +101,12 @@ function PlayerAI:UpdateTargets()
             winningPlyr = plyr
             topRockingValue = plyr.rockingTime
         end
+
+        local plyrDist = world.DistanceBetween(self.node.position2D, plyr.node.position2D)
+        if plyr ~= self.playerScript and plyrDist < smallestPlyrDist then
+            closestPlyr = plyr
+            smallestPlyrDist = plyrDist
+        end
     end
 
     if winningPlyr and winningPlyr:GetRockingProgressPercent() > SHOULD_ATTACK_OTHER_THRESHOLD and
@@ -107,5 +115,12 @@ function PlayerAI:UpdateTargets()
         self.iWannaRock = false
         self.attackTarget = winningPlyr
         self.moveDest = self:GetAttackPosition(winningPlyr.node.position2D)
+    end
+
+    -- if someone is too close for comfort, hit them!
+    if closestPlyr and smallestPlyrDist < NEARBY_DISTANCE then
+        self.iWannaRock = false
+        self.attackTarget = closestPlyr
+        self.moveDest = self:GetAttackPosition(closestPlyr.node.position2D)
     end
 end
