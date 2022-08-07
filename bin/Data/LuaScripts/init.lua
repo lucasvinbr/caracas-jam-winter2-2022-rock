@@ -6,6 +6,7 @@ local world = require "LuaScripts/World"
 local gameAudio = require "LuaScripts/Audio"
 require "LuaScripts/Player"
 require "LuaScripts/PlayerController"
+require "LuaScripts/PlayerAI"
 
 
 COLMASK_WORLD = 1

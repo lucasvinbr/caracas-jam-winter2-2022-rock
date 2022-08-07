@@ -1,7 +1,3 @@
-local uiManager = require "LuaScripts/ui/UI_Manager"
-local world = require "LuaScripts/World"
-local gameAudio = require "LuaScripts/Audio"
-
 ---@class PlayerController : LuaScriptObject
 
 

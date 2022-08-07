@@ -1,4 +1,3 @@
-local uiManager = require "LuaScripts/ui/UI_Manager"
 local world = require "LuaScripts/World"
 local gameAudio = require "LuaScripts/Audio"
 local gameUi = require "LuaScripts/ui/screens/UI_Game"
@@ -14,6 +13,7 @@ local playerCharOptions = require "LuaScripts/Player_characters"
 ---@field playerColor Color
 ---@field playerArrowNode Node
 ---@field playerArrowSprite StaticSprite2D
+---@field rockingTime number
 
 local PLAYERSTATE_IDLE = 0
 local PLAYERSTATE_MOVING = 1
@@ -197,6 +197,10 @@ end
 
 function Player:CanMove()
     return self.curPlayerState ~= PLAYERSTATE_STUNNED and self.curPlayerState ~= PLAYERSTATE_ATTACKING
+end
+
+function Player:GetRockingProgressPercent()
+    return self.rockingTime / ROCKING_TIME_TO_WIN
 end
 
 --- attacks push the attacked player around, makes them stop rocking and reduces their rock bar, preventing them from winning the game

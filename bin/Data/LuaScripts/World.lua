@@ -34,9 +34,13 @@ function world.CreateDynamicContent()
     playerChar.node:CreateScriptObject("PlayerController")
     playerChar:SetupColor(PLAYER_COLORS[1])
 
-    -- test create another char
-    local aiChar = world.CreateCharacter(Vector2.ONE)
-    aiChar:SetupColor(PLAYER_COLORS[2])
+    -- create more chars!
+    for i = 2, 4, 1 do
+        local aiChar = world.CreateCharacter(Vector2.ONE)
+        aiChar:SetupColor(PLAYER_COLORS[i])
+        aiChar.node:CreateScriptObject("PlayerAI")
+    end
+
 end
 
 function world.CreateBoundaries()
