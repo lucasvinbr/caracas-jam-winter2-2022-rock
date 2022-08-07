@@ -3,6 +3,9 @@ local gameAudio = require "LuaScripts/Audio"
 
 local world = {}
 
+---@type StaticSprite2D
+world.fadeSprite = nil
+
 world.DoneSettingUp = false
 
 ---@type Player[]
@@ -94,45 +97,25 @@ function world.CreateEnemy(spawnPos, isInFlippedWorld)
     local node = world.DynamicContentParent:CreateChild("Enemy")
     node.position2D = spawnPos
 
-    ---@type Enemy
-    local enemyScript = node:CreateScriptObject("Enemy")
-
-    enemyScript:SetupFlipDependentData(isInFlippedWorld)
-
     return node
 end
 
 
----@param victory boolean
-function world.EndGame(victory)
+---@param winningPlayer Player
+function world.EndGame(winningPlayer)
     if CurGameState ~= GAMESTATE_ENDED then
         CurGameState = GAMESTATE_ENDED
-
-        world.PlayerScript.canCountTime = false
-        world.PlayerScript.canMove = false
 
         uiManager.HideUI("Game")
 
         ---@type EndGameScreenData
         local gameEndData = {
-            hasWon = victory
+            winningPlayer = winningPlayer
         }
 
-        if victory then
-            TimesWon = TimesWon + 1
-        else
-            gameAudio.PlayOneShotSoundWithFreqVariation("Music/duality/gameplaytransition.ogg", 0.65, 0)
-        end
-
         uiManager.ShowUI("Endgame", gameEndData)
-        
-    end
-end
 
-function world.FreezeAllPlayers()
-    -- TODO make this work in multiplayer
-    world.PlayerScript.body:SetKinematic(true)
-    world.PlayerScript.canMove = false
+    end
 end
 
 function world.Cleanup()
@@ -140,6 +123,9 @@ function world.Cleanup()
         world.DynamicContentParent:Remove()
         world.DynamicContentParent = nil
 
+        world.fadeSprite:SetColor(Color.TRANSPARENT_BLACK)
+        world.PlayerScripts = {}
+        
         CurGameState = GAMESTATE_ENDED
     end
 end

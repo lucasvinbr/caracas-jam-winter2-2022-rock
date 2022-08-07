@@ -15,6 +15,7 @@ COLMASK_OBJS = 4
 SPRITELAYER_WORLD = 0
 SPRITELAYER_PLAYER = 4
 SPRITELAYER_PLAYER_ARROW = 8
+SPRITELAYER_ENDGAME_FADE = 16
 
 TAG_PLAYER = "player"
 TAG_ENEMY = "enemy"
@@ -108,6 +109,11 @@ function CreateScene()
     scenarioSprite:SetSprite(cache:GetResource("Sprite2D", "Urho2D/rock/tela_jogo.png"))
     scenarioSprite:SetLayer(SPRITELAYER_WORLD)
     scenarioNode:SetScale2D(world.WORLD_SCALE)
+
+    local fadeNode = scenarioNode:Clone()
+    world.fadeSprite = fadeNode:GetComponent("StaticSprite2D")
+    world.fadeSprite:SetColor(Color.TRANSPARENT_BLACK)
+    world.fadeSprite:SetLayer(SPRITELAYER_ENDGAME_FADE)
 
     world.CreateBoundaries()
 

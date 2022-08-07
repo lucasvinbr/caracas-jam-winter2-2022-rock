@@ -21,7 +21,11 @@ end
 ---@param dataPassed table
 Ui.Show = function (instanceRoot, dataPassed)
     instanceRoot:SetVisible(true)
-    --world.PlayerScript.timeBar = timeBar
+
+    -- remove existing player UI entries from previous games
+    while playerEntriesParent:GetNumChildren() > 2 do
+        playerEntriesParent:RemoveChildAtIndex(1)
+    end
 end
 
 --- returns the player's rocking progress bar

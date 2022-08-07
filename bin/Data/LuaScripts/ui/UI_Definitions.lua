@@ -54,6 +54,6 @@ local definitions = {
 ---@field closePopupOnClick boolean
 
 ---@class EndGameScreenData
----@field winnerName string
+---@field winningPlayer Player
 
 return definitions

@@ -136,7 +136,10 @@ function Player:Update(timeStep)
                 -- update rocking bar
                 self.rockingBar:SetValue(self.rockingTime / ROCKING_TIME_TO_WIN)
 
-                -- TODO victory check
+                if self.rockingTime >= ROCKING_TIME_TO_WIN then
+                    world.EndGame(self)
+                    return
+                end
             end
         end
     end
@@ -200,9 +203,15 @@ end
 ---@param pushForce Vector2
 ---@param rockbarDamage number
 function Player:BeAttacked(pushForce, rockbarDamage)
+    if CurGameState ~= GAMESTATE_PLAYING then return end
+
     self.body:ApplyLinearImpulseToCenter(pushForce, true)
     self.rockingTime = math.max(0.0, self.rockingTime - rockbarDamage)
     self.actionTimeElapsed = 0.0
 
     self.rockingBar:SetValue(self.rockingTime / ROCKING_TIME_TO_WIN)
+end
+
+function Player:ForceAnim(animName)
+    self.animatedSprite:SetAnimation(animName)
 end
