@@ -81,9 +81,8 @@ function Player:Start()
 end
 
 function Player:DelayedStart()
-    self.rockingBar = gameUi.SetupPlayer(self.charData)
+    self.rockingBar = gameUi.SetupPlayer(self.charData, self.playerColor)
     self.playerArrowSprite:SetColor(self.playerColor)
-    self.rockingBar:SetColor(self.playerColor)
 end
 
 function Player:SetupColor(playerColor)

@@ -18,6 +18,16 @@
 		<attribute name="Max Anchor" value="0.5 0" />
 		<attribute name="Pivot" value="0.5 0" />
 		<attribute name="Image Rect" value="0 0 256 128" />
+		<element type="BorderImage">
+			<attribute name="Name" value="playerColorIndicator" />
+			<attribute name="Position" value="-39 0" />
+			<attribute name="Size" value="24 24" />
+			<attribute name="Min Anchor" value="0 1" />
+			<attribute name="Max Anchor" value="0 1" />
+			<attribute name="Pivot" value="0 1" />
+			<attribute name="Texture" value="Texture2D;Urho2D/rock/playerTriangle.png" />
+			<attribute name="Image Rect" value="0 0 32 32" />
+		</element>
 	</element>
 	<element type="ProgressBar">
 		<attribute name="Name" value="playerEntryProgBar" />

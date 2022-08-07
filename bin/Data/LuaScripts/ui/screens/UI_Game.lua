@@ -26,8 +26,9 @@ end
 
 --- returns the player's rocking progress bar
 ---@param playerData PlayerCharacterData
+---@param playerColor Color
 ---@return ProgressBar
-Ui.SetupPlayer = function (playerData)
+Ui.SetupPlayer = function (playerData, playerColor)
     local playerEntriesCount = playerEntriesParent:GetNumChildren() - 2 -- there are 2 spacers as children
     local newEntry = ui:LoadLayout(cache:GetResource("XMLFile", "UI/rock/screen_game_player_entry.xml"))
     newEntry:SetParent(playerEntriesParent, playerEntriesCount + 1)
@@ -37,8 +38,12 @@ Ui.SetupPlayer = function (playerData)
     playerPicImg:SetTexture(playerPicTexture)
     playerPicImg:SetFullImageRect()
 
+    local playerColorIndicator = playerPicImg:GetChild("playerColorIndicator") --[[@as BorderImage]]
+    playerColorIndicator:SetColor(playerColor)
+
     local playerProgBar = newEntry:GetChild("playerEntryProgBar") --[[@as ProgressBar]]
     playerProgBar:SetValue(0.0)
+    playerProgBar:SetColor(playerColor)
     return playerProgBar
 end
 
