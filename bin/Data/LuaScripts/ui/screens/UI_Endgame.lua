@@ -37,6 +37,7 @@ Ui.Show = function(instanceRoot, dataPassed)
     gameAudio.PlayOneShotSoundWithFrequency("Sounds/rock/arrival.ogg", 1.0, 22050, false)
 
     for _, plyr in ipairs(world.PlayerScripts) do
+        plyr.playerArrowSprite:SetEnabled(false)
         plyr:ForceAnim("idle")
     end
 
@@ -44,7 +45,7 @@ Ui.Show = function(instanceRoot, dataPassed)
         -- fade to black
         for i = 1, 10, 1 do
             local colorValue = i / 10
-            world.fadeSprite:SetColor(Color(0, 0, 0, colorValue))
+            -- world.fadeSprite:SetColor(Color(0, 0, 0, colorValue))
             coroutine.sleep(0.05)
         end
 
