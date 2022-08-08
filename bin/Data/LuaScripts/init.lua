@@ -88,9 +88,9 @@ function SetupUI()
 end
 
 function SetWindowTitleAndIcon()
-    local icon = cache:GetResource("Image", "Urho2D/duality/gameIcon.png")
+    local icon = cache:GetResource("Image", "Urho2D/rock/icon_BattleofRock.png")
     graphics:SetWindowIcon(icon)
-    graphics.windowTitle = "Rock"
+    graphics.windowTitle = "Battle of Rock"
 end
 
 function CreateScene()
