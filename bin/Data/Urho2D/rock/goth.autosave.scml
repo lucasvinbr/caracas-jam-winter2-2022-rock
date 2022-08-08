@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+    <folder id="0" name="johnny">
+        <file id="0" name="johnny/idle_0.png" width="81" height="119" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="1" name="johnny/idle_1.png" width="81" height="116" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="2" name="johnny/rock_0.png" width="77" height="92" pivot_x="0.5" pivot_y="0.3"/>
+        <file id="3" name="johnny/rock_1.png" width="90" height="96" pivot_x="0.5" pivot_y="0.3"/>
+        <file id="4" name="johnny/dash.png" width="236" height="101" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="5" name="johnny/attack_0.png" width="81" height="120" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="6" name="johnny/attack_1.png" width="86" height="120" pivot_x="0.55" pivot_y="0.5"/>
+        <file id="7" name="johnny/attack_2.png" width="108" height="120" pivot_x="0.6" pivot_y="0.5"/>
+        <file id="8" name="johnny/attack_3.png" width="65" height="226" pivot_x="0.5" pivot_y="0.2"/>
+        <file id="9" name="johnny/attack_4.png" width="164" height="120" pivot_x="0.2" pivot_y="0.5"/>
+        <file id="10" name="johnny/walk.png" width="81" height="120" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <folder id="1" name="countrygirl">
+        <file id="0" name="countrygirl/CountryGirlStatic1.png" width="186" height="320" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="countrygirl/CountryGirlRock1.png" width="146" height="320" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="countrygirl/CountryGirlRock2.png" width="160" height="328" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="countrygirl/CountrygirlWalk1.png" width="208" height="321" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="countrygirl/Countrygirleffect1.png" width="114" height="320" pivot_x="0" pivot_y="1"/>
+        <file id="5" name="countrygirl/Countrygirlattack.png" width="255" height="321" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <folder id="2" name="goth">
+        <file id="0" name="goth/Gothidle.png" width="144" height="307" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="goth/Gothjump1.png" width="118" height="306" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="goth/Gothjump2.png" width="280" height="268" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="goth/Gothattack2.png" width="337" height="307" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="goth/Gothpunched.png" width="321" height="171" pivot_x="0" pivot_y="1"/>
+        <file id="5" name="goth/Gothattack.png" width="344" height="400" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <animation id="0" name="attack" length="500" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+                <key id="1" time="12">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                </key>
+                <key id="2" time="239">
+                    <object_ref id="0" timeline="0" key="3" z_index="0"/>
+                </key>
+                <key id="3" time="297">
+                    <object_ref id="0" timeline="0" key="4" z_index="0"/>
+                </key>
+                <key id="4" time="330">
+                    <object_ref id="0" timeline="0" key="5" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="1">
+                <key id="0" spin="0">
+                    <object folder="2" file="0" x="-0.774963" y="1.731391" pivot_x="0.449314" pivot_y="0.573268" angle="0"/>
+                </key>
+                <key id="1" spin="0">
+                    <object folder="2" file="0" x="-1.728407" y="-1.847325" pivot_x="0.442693" pivot_y="0.561611" angle="0"/>
+                </key>
+                <key id="2" time="12">
+                    <object folder="2" file="5" x="0.519255" y="0.656098" pivot_x="0.575983" pivot_y="0.43914" angle="0"/>
+                </key>
+                <key id="3" time="239" spin="-1">
+                    <object folder="2" file="3" x="-2.070545" y="-2.407847" pivot_x="0.198639" pivot_y="0.579105" angle="9.756035"/>
+                </key>
+                <key id="4" time="297">
+                    <object folder="2" file="3" x="-2.236082" y="-0.919873" pivot_x="0.198639" pivot_y="0.579105" angle="352.598215" scale_x="1"/>
+                </key>
+                <key id="5" time="330" spin="0">
+                    <object folder="2" file="0" x="-2.330266" y="-0.073268" pivot_x="0.449314" pivot_y="0.573268" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="1" name="stunned" length="100" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="Countrygirleffect1">
+                <key id="0" spin="0">
+                    <object folder="2" file="4" x="-1.770253" y="-4.872569" pivot_x="0.425556" pivot_y="0.583329" angle="326.177119"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="2" name="idle" length="300" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="1">
+                <key id="0" spin="0">
+                    <object folder="2" file="0" x="-61.997406" y="152.735316" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="3" name="rock" length="300" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="140">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="1">
+                <key id="0" spin="0">
+                    <object folder="2" file="1" x="-1.233162" y="3.580615" pivot_x="0.542686" pivot_y="0.490813" angle="0"/>
+                </key>
+                <key id="1" time="140" spin="0">
+                    <object folder="2" file="0" x="-3.52396" y="-0.648261" pivot_x="0.452532" pivot_y="0.553022" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="4" name="walk" length="350" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="173">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="walk">
+                <key id="0" spin="0">
+                    <object folder="2" file="0" x="4.42427" y="-5.704436" pivot_x="0.494851" pivot_y="0.481349" angle="0"/>
+                </key>
+                <key id="1" time="173" spin="0">
+                    <object folder="2" file="1" x="-1.19321" y="-0.604924" pivot_x="0.502734" pivot_y="0.509685" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

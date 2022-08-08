@@ -48,6 +48,38 @@ local charOptions = {
         timeBeforeRocking = 1.0,
         voicePitch = 1.6,
         themeSongPath = "Music/rock/TexasTechno.ogg"
+    },
+    {
+        name = "Goth",
+        animSpritePath = "Urho2D/rock/goth.scml",
+        portraitSpritePath = "Urho2D/rock/portrait_goth.png",
+        spriteScaling = 0.4,
+        moveSpeed = 50.0,
+        attackDuration = 0.4,
+        attackTimeBeforeHit = 0.25,
+        attackReach = 4.5,
+        attackDamage = 1.9,
+        attackStunTime = 0.55,
+        attackPushForce = 90,
+        timeBeforeRocking = 1.0,
+        voicePitch = 1.8,
+        themeSongPath = "Music/rock/PopMetal.ogg"
+    },
+    {
+        name = "Jimmy",
+        animSpritePath = "Urho2D/rock/jimmy.scml",
+        portraitSpritePath = "Urho2D/rock/portrait_jimmy.png",
+        spriteScaling = 0.3,
+        moveSpeed = 40.0,
+        attackDuration = 0.4,
+        attackTimeBeforeHit = 0.25,
+        attackReach = 4.5,
+        attackDamage = 1.9,
+        attackStunTime = 0.55,
+        attackPushForce = 90,
+        timeBeforeRocking = 1.0,
+        voicePitch = 0.9,
+        themeSongPath = "Music/rock/Whatdafunk.ogg"
     }
 }
 
