@@ -14,6 +14,7 @@ local playerCharOptions = require "LuaScripts/Player_characters"
 ---@field playerArrowNode Node
 ---@field playerArrowSprite StaticSprite2D
 ---@field rockingTime number
+---@field stunTime number @the amount of time the player should remain stunned
 
 local PLAYERSTATE_IDLE = 0
 local PLAYERSTATE_MOVING = 1
@@ -36,7 +37,7 @@ local cheerSound = "Sounds/rock/yeah.ogg"
 
 -- Character script object class
 ---@type Player
-Player = ScriptObject()
+Player = ScriptObject() --[[@as Player]]
 
 Player.__index = Player
 
@@ -50,6 +51,7 @@ function Player:Start()
     self.curPlayerState = PLAYERSTATE_IDLE
     self.attackIsComplete = false
 
+    self.stunTime = 0.0
     -- counter for mutually exclusive actions, like idling and attacking
     self.actionTimeElapsed = 0.0
 
@@ -126,6 +128,12 @@ function Player:Update(timeStep)
         self.moveDir = Vector2(self.moveDir.x * speedX, self.moveDir.y * speedX * VERTICAL_MOVESPEED_FACTOR)
     end
 
+    if self.curPlayerState == PLAYERSTATE_STUNNED then
+        if self.actionTimeElapsed >= self.stunTime then
+            self.curPlayerState = PLAYERSTATE_IDLE
+            self.actionTimeElapsed = 0.0
+        end
+    end
 
     -- if not attacking, we can move
     if self.wantsToAttack and self:CanAttack() then
@@ -156,7 +164,6 @@ function Player:Update(timeStep)
         end
     end
 
-
     if self.curPlayerState == PLAYERSTATE_ATTACKING then
         if self.actionTimeElapsed >= self.charData.attackDuration then
             self.curPlayerState = PLAYERSTATE_IDLE
@@ -179,7 +186,7 @@ function Player:Update(timeStep)
                     -- log:Write(LOG_DEBUG, "we've hit someone else!")
                     local enemyPlayerScript = rayResult.body:GetNode():GetScriptObject("Player") --[[@as Player]]
                     if enemyPlayerScript then
-                        enemyPlayerScript:BeAttacked(attackDir * self.charData.attackPushForce, self.charData.attackDamage)
+                        enemyPlayerScript:BeAttacked(attackDir * self.charData.attackPushForce, self.charData.attackDamage, self.charData.attackStunTime)
                     end
                 end
             end
@@ -220,11 +227,14 @@ end
 --- attacks push the attacked player around, makes them stop rocking and reduces their rock bar, preventing them from winning the game
 ---@param pushForce Vector2
 ---@param rockbarDamage number
-function Player:BeAttacked(pushForce, rockbarDamage)
+---@param stunTime number
+function Player:BeAttacked(pushForce, rockbarDamage, stunTime)
     if CurGameState ~= GAMESTATE_PLAYING then return end
 
     self.body:ApplyLinearImpulseToCenter(pushForce, true)
     self.rockingTime = math.max(0.0, self.rockingTime - rockbarDamage)
+    self.curPlayerState = PLAYERSTATE_STUNNED
+    self.stunTime = stunTime
     self.actionTimeElapsed = 0.0
 
     self.rockingBar:SetValue(self.rockingTime / ROCKING_TIME_TO_WIN)
