@@ -1,5 +1,6 @@
 local uiManager = require("LuaScripts/ui/UI_Manager")
 local gameAudio = require "LuaScripts/Audio"
+local mouseConfig = require "LuaScripts/Mouse"
 
 ---@class UiScreen
 local Ui = {}
@@ -51,6 +52,9 @@ end
 ---@param dataPassed table
 Ui.Show = function (instanceRoot, dataPassed)
     instanceRoot:SetVisible(true)
+
+    -- unlock mouse!
+    mouseConfig.SetMouseMode(MM_FREE)
 
     gameAudio.StopMusic()
 

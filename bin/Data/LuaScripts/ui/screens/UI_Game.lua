@@ -1,5 +1,4 @@
-local uiManager = require("LuaScripts/ui/UI_Manager")
-local world = require("LuaScripts/World")
+local mouseConfig = require "LuaScripts/Mouse"
 
 ---@class UiGame: UiScreen
 local Ui = {}
@@ -21,6 +20,9 @@ end
 ---@param dataPassed table
 Ui.Show = function (instanceRoot, dataPassed)
     instanceRoot:SetVisible(true)
+
+    -- lock mouse during gameplay!
+    mouseConfig.SetMouseMode(MM_ABSOLUTE)
 
     -- remove existing player UI entries from previous games
     while playerEntriesParent:GetNumChildren() > 2 do
