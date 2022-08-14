@@ -24,24 +24,23 @@ local function HandleMouseModeChange(eventType, eventData)
     input.mouseVisible = not MouseLocked
 end
 
-
+---@param mode MouseMode
 function mouseConfig.SetMouseMode(mode)
     UseMouseMode_ = mode
-    if GetPlatform() ~= "Web" then
-        if UseMouseMode_ == MM_FREE then
-            input.mouseVisible = true
-        end
 
-        if UseMouseMode_ ~= MM_ABSOLUTE then
-            input.mouseMode = UseMouseMode_
-
-            if console ~= nil and console.visible then
-                input:SetMouseMode(MM_ABSOLUTE, true)
-            end
-        end
-    else
+    if UseMouseMode_ == MM_FREE then
         input.mouseVisible = true
     end
+
+    input.mouseMode = UseMouseMode_
+
+    if UseMouseMode_ ~= MM_ABSOLUTE then
+        if console ~= nil and console.visible then
+            input:SetMouseMode(MM_ABSOLUTE, true)
+        end
+    end
+
+    HandleMouseModeRequest()
 end
 
 function mouseConfig.SetupMouseEvents()
