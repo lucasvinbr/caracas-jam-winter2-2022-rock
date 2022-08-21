@@ -54,7 +54,7 @@ function PlayerAI:Update(timeStep)
         -- the distance check in this case shouldn't be too strict in the y axis,
         -- and in the x axis, as long as we're close enough, it's ok
 
-        if math.abs(curPos.x - targetPos.x) <= self.playerScript.charData.attackReach and
+        if math.abs(curPos.x - targetPos.x) < self.playerScript.charData.attackReach and
          math.abs(curPos.y - targetPos.y) <= 0.2 then
             -- we're close enough to attack, but keep moving towards the target to make sure we're facing the right direction
             self.moveDest = targetPos
@@ -77,13 +77,24 @@ end
 ---@param targetPosition Vector2
 ---@return Vector2
 function PlayerAI:GetAttackPosition(targetPosition)
+    local attackPos = targetPosition
+    -- make the target position have an acceptable margin, so that the AI won't circle around the position if they pass it
+    local atkReachWithMargin = self.playerScript.charData.attackReach * 0.8
     if targetPosition.x - self.node.position2D.x > 0.0 then
         -- target is to our right.
         -- their left side should be closer to us
-        return targetPosition + Vector2.LEFT * self.playerScript.charData.attackReach
+        attackPos = targetPosition + Vector2.LEFT * atkReachWithMargin
+        if not world.IsPointInsideWalkableArea(attackPos) then
+            attackPos = targetPosition + Vector2.RIGHT * atkReachWithMargin
+        end
     else
-        return targetPosition + Vector2.RIGHT * self.playerScript.charData.attackReach
+        attackPos = targetPosition + Vector2.RIGHT * atkReachWithMargin
+        if not world.IsPointInsideWalkableArea(attackPos) then
+            attackPos = targetPosition + Vector2.LEFT * atkReachWithMargin
+        end
     end
+
+    return attackPos
 end
 
 function PlayerAI:UpdateTargets()

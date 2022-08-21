@@ -163,6 +163,17 @@ function world.DistanceBetween(from, to)
 
 end
 
+---@param point Vector2
+function world.IsPointInsideWalkableArea(point)
+    if point.x > world.BOUNDS_CENTER.x - world.BOUNDS_UNSCALED.x and point.x < world.BOUNDS_CENTER.x + world.BOUNDS_UNSCALED.x then
+        if point.y > world.BOUNDS_CENTER.y - world.BOUNDS_UNSCALED.y and point.y < world.BOUNDS_CENTER.y + world.BOUNDS_UNSCALED.y then
+            return true
+        end
+    end
+
+    return false
+end
+
 function world.SaveScene(initial)
     local filename = ProjectFolderName
     if not initial then
