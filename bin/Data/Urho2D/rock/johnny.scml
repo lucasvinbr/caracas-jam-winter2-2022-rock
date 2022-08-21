@@ -12,9 +12,22 @@
         <file id="8" name="johnny/attack_3.png" width="65" height="226" pivot_x="0.5" pivot_y="0.2"/>
         <file id="9" name="johnny/attack_4.png" width="164" height="120" pivot_x="0.2" pivot_y="0.5"/>
         <file id="10" name="johnny/walk.png" width="81" height="120" pivot_x="0" pivot_y="1"/>
+        <file id="11" name="johnny/stunned.png" width="110" height="128" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
-        <animation id="0" name="attack" length="250" interval="100">
+        <animation id="0" name="stunned" length="1000" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="stunned">
+                <key id="0" spin="0">
+                    <object folder="0" file="11" x="-53.813559" y="63.983051"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="1" name="attack" length="250" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
@@ -50,25 +63,19 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="1" name="idle" length="300" interval="100">
+        <animation id="2" name="idle" length="300" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
-                </key>
-                <key id="1" time="150">
-                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
                 </key>
             </mainline>
             <timeline id="0" name="1">
                 <key id="0" spin="0">
                     <object folder="0" file="0" angle="0"/>
                 </key>
-                <key id="1" time="150" spin="0">
-                    <object folder="0" file="1" angle="0"/>
-                </key>
             </timeline>
         </animation>
-        <animation id="2" name="rock" length="150" interval="100">
+        <animation id="3" name="rock" length="150" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
@@ -79,14 +86,14 @@
             </mainline>
             <timeline id="0" name="1">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="-0.389105" y="-23.346304" angle="0"/>
+                    <object folder="0" file="2" x="-1.660291" y="-33.515796" angle="0"/>
                 </key>
                 <key id="1" time="70" spin="0">
-                    <object folder="0" file="3" x="-0.389105" y="-23.346304" angle="0"/>
+                    <object folder="0" file="3" x="-2.507749" y="-33.939524" angle="0"/>
                 </key>
             </timeline>
         </animation>
-        <animation id="3" name="walk" length="350" interval="100">
+        <animation id="4" name="walk" length="350" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
@@ -97,10 +104,10 @@
             </mainline>
             <timeline id="0" name="walk">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-2.718587" y="-1.537769" pivot_x="0.494851" pivot_y="0.481349"/>
+                    <object folder="0" file="10" x="-2.718587" y="-1.537769" pivot_x="0.494851" pivot_y="0.481349" angle="0"/>
                 </key>
                 <key id="1" time="173" spin="0">
-                    <object folder="0" file="1" x="-2.718587" y="-1.537769" pivot_x="0.494851" pivot_y="0.481349"/>
+                    <object folder="0" file="1" x="-2.718587" y="-1.537769" pivot_x="0.494851" pivot_y="0.481349" angle="0"/>
                 </key>
             </timeline>
         </animation>
