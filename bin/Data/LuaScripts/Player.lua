@@ -193,6 +193,8 @@ function Player:Update(timeStep)
         end
     end
 
+    self.animatedSprite:SetOrderInLayer(math.floor((world.BOUNDS_UNSCALED.y * 2) - self.node.position2D.y))
+
     -- animation...
     if self.curPlayerState == PLAYERSTATE_ROCKING then
         self.animatedSprite:SetAnimation("rock")
