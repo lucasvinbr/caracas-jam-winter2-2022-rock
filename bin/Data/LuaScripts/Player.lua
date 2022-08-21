@@ -23,7 +23,7 @@ local PLAYERSTATE_ATTACKING = 3
 local PLAYERSTATE_STUNNED = 4
 
 local VERTICAL_MOVESPEED_FACTOR = 0.6
-local ATTACK_VERTICAL_AREA = 0.2
+local ATTACK_VERTICAL_AREA = 0.4
 -- note: all player sprites should, by default, be looking to the right!
 
 local hitSounds = {
@@ -140,6 +140,7 @@ function Player:Update(timeStep)
     if self.wantsToAttack and self:CanAttack() then
         self.actionTimeElapsed = 0.0
         self.timeSinceLastAttack = 0.0
+        self.attackIsComplete = false
         self.curPlayerState = PLAYERSTATE_ATTACKING
     end
 
