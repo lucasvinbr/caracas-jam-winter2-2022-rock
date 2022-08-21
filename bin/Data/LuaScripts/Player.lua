@@ -242,7 +242,7 @@ function Player:BeAttacked(pushForce, rockbarDamage, stunTime)
     self.rockingBar:SetValue(self.rockingTime / ROCKING_TIME_TO_WIN)
 
     local voiceFrequency = 22050 * self.charData.voicePitch + Random(-1000, 1000)
-    gameAudio.PlayOneShotSoundWithFrequency(hitSounds[RandomInt(1, #hitSounds + 1)], 0.7, voiceFrequency)
+    gameAudio.PlayOneShotSoundWithFrequency(hitSounds[RandomInt(1, #hitSounds + 1)], 0.6, voiceFrequency)
 end
 
 function Player:ForceAnim(animName)
