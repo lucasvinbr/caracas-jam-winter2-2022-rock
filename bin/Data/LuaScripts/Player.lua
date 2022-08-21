@@ -23,6 +23,7 @@ local PLAYERSTATE_ATTACKING = 3
 local PLAYERSTATE_STUNNED = 4
 
 local VERTICAL_MOVESPEED_FACTOR = 0.6
+local ATTACK_VERTICAL_AREA = 0.2
 -- note: all player sprites should, by default, be looking to the right!
 
 local hitSounds = {
@@ -174,17 +175,23 @@ function Player:Update(timeStep)
             -- apply actual attack calculations/effects!
             -- log:Write(LOG_DEBUG, "attack goes here!")
             local attackDir = Vector2.RIGHT
+            local posX = node.position2D.x
+            local posY = node.position2D.y
+            local attackRect = Rect() --[[@as Rect]]
             if self.animatedSprite.flipX then
                attackDir = Vector2.LEFT
+               attackRect:Define(Vector2(posX + attackDir.x * self.charData.attackReach, posY - ATTACK_VERTICAL_AREA), Vector2(posX, posY + ATTACK_VERTICAL_AREA))
+            else
+                attackRect:Define(Vector2(posX, posY - ATTACK_VERTICAL_AREA), Vector2(posX + attackDir.x * self.charData.attackReach, posY + ATTACK_VERTICAL_AREA))
             end
-
+            
             for i, rayResult in ipairs(Scene_:GetComponent("PhysicsWorld2D"):
-              Raycast(node.position2D, node.position2D + attackDir * self.charData.attackReach, COLMASK_PLAYER)) do
-                if rayResult.body == self.body then
+              GetRigidBodies(attackRect, COLMASK_PLAYER)) do
+                if rayResult == self.body then
                     log:Write(LOG_DEBUG, "we've hit ourselves!")
-                else
+                elseif rayResult then
                     -- log:Write(LOG_DEBUG, "we've hit someone else!")
-                    local enemyPlayerScript = rayResult.body:GetNode():GetScriptObject("Player") --[[@as Player]]
+                    local enemyPlayerScript = rayResult:GetNode():GetScriptObject("Player") --[[@as Player]]
                     if enemyPlayerScript then
                         enemyPlayerScript:BeAttacked(attackDir * self.charData.attackPushForce, self.charData.attackDamage, self.charData.attackStunTime)
                     end
