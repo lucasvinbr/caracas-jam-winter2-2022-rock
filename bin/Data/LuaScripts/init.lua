@@ -109,7 +109,7 @@ function CreateScene()
     local scenarioSprite = scenarioNode:CreateComponent("StaticSprite2D")
     scenarioSprite:SetSprite(cache:GetResource("Sprite2D", "Urho2D/rock/tela_jogo.png"))
     scenarioSprite:SetLayer(SPRITELAYER_WORLD)
-    scenarioNode:SetScale2D(world.WORLD_SCALE)
+    scenarioNode:SetScale2D(world.WORLD_VISUAL_SCALE)
 
     local fadeNode = scenarioNode:Clone()
     world.fadeSprite = fadeNode:GetComponent("StaticSprite2D")

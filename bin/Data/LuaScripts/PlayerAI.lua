@@ -125,13 +125,13 @@ function PlayerAI:UpdateTargets()
         -- we should go beat them up!
         self.iWannaRock = false
         self.attackTarget = winningPlyr
-        self.moveDest = self:GetAttackPosition(winningPlyr.node.position2D)
+        self.moveDest = self:GetAttackPosition(winningPlyr.node.worldPosition2D)
     end
 
     -- if someone is too close for comfort, hit them!
     if closestPlyr and smallestPlyrDist < NEARBY_DISTANCE then
         self.iWannaRock = false
         self.attackTarget = closestPlyr
-        self.moveDest = self:GetAttackPosition(closestPlyr.node.position2D)
+        self.moveDest = self:GetAttackPosition(closestPlyr.node.worldPosition2D)
     end
 end

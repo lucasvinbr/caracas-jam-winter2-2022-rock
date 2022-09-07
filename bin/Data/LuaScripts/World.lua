@@ -20,7 +20,19 @@ world.BOUNDS_CENTER = Vector2(0.0, -2.5)
 --- assuming world is a square
 world.BOUNDS_UNSCALED = Vector2(13.5, 5.8)
 
-world.WORLD_SCALE = Vector2(3.5, 4.0)
+--- only affects BG visual size. Boundaries are defined separately
+world.WORLD_VISUAL_SCALE = Vector2(3.5, 4.0)
+
+---@type Vector2
+world.TopLeft = nil
+---@type Vector2
+world.TopRight = nil
+---@type Vector2
+world.BotLeft = nil
+---@type Vector2
+world.BotRight = nil
+
+world.BoundaryThickness = 8.0
 
 
 function world.CreateDynamicContent()
@@ -47,7 +59,6 @@ function world.CreateBoundaries()
     local boundariesParent = Scene_:CreateChild("boundaries")
 
     -- create level boundaries based on world bounds constants and scale
-    local boundaryThickness = 8
     local rightBoundary = Scene_:CreateChild("bRight")
     local boundaryRigid = rightBoundary:CreateComponent("RigidBody2D")
     boundaryRigid.bodyType = BT_STATIC
@@ -56,26 +67,33 @@ function world.CreateBoundaries()
     boundaryShape:SetCategoryBits(COLMASK_WORLD)
     boundaryShape:SetSize(2.0, 2.0)
 
-    rightBoundary.position2D = world.BOUNDS_CENTER + Vector2(world.BOUNDS_UNSCALED.x + boundaryThickness, 0)
-    rightBoundary:SetScale2D(Vector2(boundaryThickness, world.BOUNDS_UNSCALED.y * 2))
+    rightBoundary.position2D = world.BOUNDS_CENTER + Vector2(world.BOUNDS_UNSCALED.x + world.BoundaryThickness, 0)
+    rightBoundary:SetScale2D(Vector2(world.BoundaryThickness, world.BOUNDS_UNSCALED.y * 2))
 
     local leftBoundary = rightBoundary:Clone()
-    leftBoundary.position2D = world.BOUNDS_CENTER + Vector2(-world.BOUNDS_UNSCALED.x - boundaryThickness, 0)
-    leftBoundary:SetScale2D(Vector2(boundaryThickness, world.BOUNDS_UNSCALED.y * 2))
+    leftBoundary.position2D = world.BOUNDS_CENTER + Vector2(-world.BOUNDS_UNSCALED.x - world.BoundaryThickness, 0)
+    leftBoundary:SetScale2D(Vector2(world.BoundaryThickness, world.BOUNDS_UNSCALED.y * 2))
 
     local topBoundary = rightBoundary:Clone()
-    topBoundary.position2D = world.BOUNDS_CENTER + Vector2(0, world.BOUNDS_UNSCALED.y + boundaryThickness)
-    topBoundary:SetScale2D(Vector2(world.BOUNDS_UNSCALED.x * 2, boundaryThickness))
+    topBoundary.position2D = world.BOUNDS_CENTER + Vector2(0, world.BOUNDS_UNSCALED.y + world.BoundaryThickness)
+    topBoundary:SetScale2D(Vector2(world.BOUNDS_UNSCALED.x * 2, world.BoundaryThickness))
 
     local bottomBoundary = rightBoundary:Clone()
-    bottomBoundary.position2D = world.BOUNDS_CENTER + Vector2(0, -world.BOUNDS_UNSCALED.y - boundaryThickness)
-    bottomBoundary:SetScale2D(Vector2(world.BOUNDS_UNSCALED.x * 2, boundaryThickness))
+    bottomBoundary.position2D = world.BOUNDS_CENTER + Vector2(0, -world.BOUNDS_UNSCALED.y - world.BoundaryThickness)
+    bottomBoundary:SetScale2D(Vector2(world.BOUNDS_UNSCALED.x * 2, world.BoundaryThickness))
 
     -- slight rotation of side boundaries to account for perspective
     rightBoundary:Rotate2D(30.0)
     leftBoundary:Rotate2D(-30.0)
-    rightBoundary:Translate2D(Vector2(boundaryThickness / 3 , boundaryThickness / 2))
-    leftBoundary:Translate2D(Vector2(-boundaryThickness / 3 , boundaryThickness / 2))
+    rightBoundary:Translate2D(Vector2(world.BoundaryThickness / 3 , world.BoundaryThickness / 2))
+    leftBoundary:Translate2D(Vector2(-world.BoundaryThickness / 3 , world.BoundaryThickness / 2))
+
+    -- store references for "vertices" of the boundaries shape
+    world.TopLeft = leftBoundary:LocalToWorld(Vector2(1.0, 0.5))
+    world.BotLeft = leftBoundary:LocalToWorld(Vector2(1.0, -0.5))
+
+    world.TopRight = rightBoundary:LocalToWorld(Vector2(-1.0, 0.5))
+    world.BotRight = rightBoundary:LocalToWorld(Vector2(-1.0, -0.5))
 end
 
 
@@ -165,7 +183,14 @@ end
 
 ---@param point Vector2
 function world.IsPointInsideWalkableArea(point)
-    if point.x > world.BOUNDS_CENTER.x - world.BOUNDS_UNSCALED.x and point.x < world.BOUNDS_CENTER.x + world.BOUNDS_UNSCALED.x then
+    -- since the boundaries are trapezoid-shaped, we've got to consider the vertical position to figure out the horizontal limits
+    local horizontalWidth = 1.0
+    local verticalPosRatio = (point.y - world.BotRight.y) / (world.TopRight.y - world.BotRight.y)
+
+    horizontalWidth = Lerp(world.BotRight.x, world.TopRight.x, verticalPosRatio)
+    -- log:Write(LOG_INFO, tostring(horizontalWidth))
+
+    if point.x > world.BOUNDS_CENTER.x - horizontalWidth and point.x < world.BOUNDS_CENTER.x + horizontalWidth then
         if point.y > world.BOUNDS_CENTER.y - world.BOUNDS_UNSCALED.y and point.y < world.BOUNDS_CENTER.y + world.BOUNDS_UNSCALED.y then
             return true
         end
